@@ -5,7 +5,6 @@ function NavBar() {
         <div>
         <nav>
             <Link to="/">Home</Link>
-            <Link to="/project">Project</Link>
         </nav>
         <Outlet />
         </div>
