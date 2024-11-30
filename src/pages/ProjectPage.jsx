@@ -23,9 +23,10 @@ function ProjectPage() {
             <h3>Pledges:</h3>
             <ul>
                 {project.pledges.map((pledgeData, key) => {
+                        console.log("Found PledgeData: ", pledgeData)
                         return (
                             <li key={key}>
-                                {pledgeData.amount} from {pledgeData.supporter}
+                                {pledgeData?.amount} from {pledgeData?.supporter}
                             </li>
                         );
                     })}

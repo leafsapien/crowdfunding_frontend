@@ -7,7 +7,6 @@ export default function useProject(projectId) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
 
-  debugger;
   useEffect(() => {
     // Here we pass the projectId to the getProject function.
     getProject(projectId)
