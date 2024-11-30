@@ -1,9 +1,9 @@
-import useProject from "../hooks/use-project";
+import useProjects from "../hooks/use-projects";
 import ProjectCard from "../components/ProjectCard";
 import "./HomePage.css";
 
 function HomePage() {
-    const { projects } = useProject();  
+    const { projects } = useProjects();  
 
     return (
             <div id="project-list">
