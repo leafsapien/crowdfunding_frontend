@@ -1,3 +1,4 @@
+
 async function postSignup(first_name, last_name, email, username, password) {
     const url = `${import.meta.env.VITE_API_URL}/users/`;
     const response = await fetch(url, {
@@ -15,17 +16,26 @@ async function postSignup(first_name, last_name, email, username, password) {
     });
 
 if (!response.ok) {
-    const fallbackError = `Error trying to sign up`;
-
+    // Parse the backend error response
     const data = await response.json().catch(() => {
-        throw new Error(fallbackError);
+        throw new Error("Error trying to sign up");
     });
-    console.error("Backend response error: ", data); // Log the error response from backend
-    const errorMessage = data?.detail ?? fallbackError;
-    throw new Error(errorMessage);
-    }
 
-    return await response.json();
+    console.error("Backend response error: ", data); //Log the error response in console
+
+    // Extract specific validation errors
+    if (data.username) {
+        throw new Error("That username already exists, please choose another");
+        }
+    if (data.email) {
+        throw new Error("That email address is already registered, please log in");
+        }
+    
+    // Fallback for other errors
+    const fallbackError = data?.detail ?? "Error trying to sign up";
+    throw new Error(fallbackError);
     }
+    return await response.json();
+}
 
 export default postSignup;

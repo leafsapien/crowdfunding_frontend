@@ -17,6 +17,8 @@ function SignupForm() {
         password: "",
     });
 
+    const [errors, setErrors] = useState(""); // For displaying error messages
+
     const handleChange = (event) => {
         const { id, value } = event.target;
         setCredentials((prevCredentials) => ({
@@ -27,6 +29,7 @@ function SignupForm() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setErrors({}); // Resets errors on new submit
         if (
             credentials.first_name && 
             credentials.last_name && 
@@ -59,13 +62,31 @@ function SignupForm() {
                     }
                 catch (error) {
                     console.error("Sign up failed: ", error.message);
-                    alert(error.message); // Displays the error to the user
+
+                    // Parse backend validation errors
+                    if (error.message.includes("username")) {
+                        setErrors((prevErrors) => ({
+                            ...prevErrors,
+                            username: "That username is already taken, please choose another.",
+                        }));
+                    } else if (error.message.includes("email")) {
+                        setErrors((prevErrors) => ({
+                            ...prevErrors,
+                            email: "That email is already registered, please log in.",
+                        }));
+                    } else {
+                        setErrors((prevErrors) => ({
+                            ...prevErrors,
+                            general: error.message,
+                        }));
                     }
+                }
             }
         };
 
         return (
         <form>
+        {errors.general && <p style={{ color: "red" }}>{errors.general}</p>} {/* General error */}
         <div>
             <label htmlFor="first_name">First name:</label>
             <input 
@@ -95,6 +116,7 @@ function SignupForm() {
             value={credentials.email}
             onChange={handleChange}
             />
+            {errors.email && <p style={{ color: "red" }}>{errors.email}</p>} {/* Email error */}
         </div>
         <div>
             <label htmlFor="username">Username:</label>
@@ -105,6 +127,7 @@ function SignupForm() {
             value={credentials.username}
             onChange={handleChange}
             />
+            {errors.username && <p style={{ color: "red" }}>{errors.username}</p>} {/* Username error */}
         </div>
         <div>
             <label htmlFor="password">Password:</label>
