@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/use-auth";
 
 import postProject from "../api/post-project";
 
 function ProjectForm() {
     const navigate = useNavigate();
-    const { setAuth } = useAuth(); //This accesses the setAuth from useAuth hook
 
     const [credentials, setCredentials] = useState({
         title: "",
@@ -17,10 +15,13 @@ function ProjectForm() {
         date_created: "",
     });
 
-    const [errors, setErrors] = useState(""); // For displaying error messages
+    const [error, setErrors] = useState(""); // For displaying error messages
 
     const handleChange = (event) => {
         const { id, value } = event.target;
+        
+        console.log(`Updating fields: ID: ${id}, Value: ${value}`);  // DEBUG
+
         setCredentials((prevCredentials) => ({
             ...prevCredentials,
             [id]: value,
@@ -37,47 +38,64 @@ function ProjectForm() {
             date_created: utcDateCreated, // Automatically sets date_created as at form submission date
             is_open: true, // Automatically sets project is_open to true
         };
-
+        
+        console.log("Credentials state: ", credentials);  //DEBUG
+        console.log("Project Data: ", projectData);  //DEBUG
     if (
         credentials.title && 
         credentials.description && 
         credentials.goal && 
-        credentials.image && 
-        credentials.date_created
+        credentials.image
         ) {
             try {
+
+                console.log("Submitting Project data: ", projectData); // DEBUG 
+                
                 // Creates the new project and stores back end data in response var
                 const response = await postProject( 
                     credentials.title,
                     credentials.description,
-                    credentials.goal,
+                    parseInt(credentials.goal, 10),
                     credentials.image,
-                    credentials.date_created
                     ); 
 
-                // Navigate to the newly created project page by obtaining id from response var
-                const projectID = response.id;
-                navigate(`/projects/${projectID}`);
+                console.log("Backend response: ", response); //DEBUG
+                
+                    // Navigate to the newly created project page by obtaining id from response var
+                    if (response && response.id) {
+                        const projectID = response.id;
+                        navigate(`/project/${projectID}`);
+                    } else {
+                        setErrors((prevErrors) => ({
+                            ...prevErrors,
+                            general: "Failed to retrieve project ID.  Please try again later"
+                        }));
+                    }
                 }
+
             catch (error) {
                 console.error("Project creation failed: ", error.message);
 
-                // Parse backend validation errors
-                const validationErrors = JSON.parse(error.message);
-                setErrors(validationErrors);
-                }
-                } else {
-                    setErrors((prevErrors) => ({
-                        ...prevErrors,
-                        general: error.message,
-                    }));
-                }
+                // Set backend validation errors
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    general: error.message || "An unexpected error occurred.",
+                }));
+            }
+        } else {
+            console.log("ERROR - Unknown as this is the last error catch block"); // DEBUG
+
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                general: error.message || "An unexpected error occurred",
+            }));
+        }
         
-        };
+    };
 
         return (
         <form>
-        {errors.general && <p style={{ color: "red" }}>{errors.general}</p>} {/* General inline error styling */}
+        {error.general && <p style={{ color: "red" }}>{error.general}</p>} {/* General inline error styling */}
         <div>
             <label htmlFor="title">Project Title:</label>
             <input 
@@ -91,7 +109,7 @@ function ProjectForm() {
         <div>
             <label htmlFor="description">Project Details and Description:</label>
             <input 
-            type="textarea" 
+            type="text" 
             id="description" 
             placeholder="Please provide all the details of your Project including location, story, and the outcome you'd like to see when you reach your funding goal." 
             value={credentials.description}
