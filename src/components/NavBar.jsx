@@ -20,6 +20,7 @@ function NavBar() {
             </>
             ) : ( // If User is logged in
             <>
+                <Link to="/project/new">New Project</Link>
                 <Link to="/mydetails">My Details</Link>
                 <Link to="/" onClick={handleLogout}>
                     Log Out

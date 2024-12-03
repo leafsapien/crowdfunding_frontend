@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/use-auth";
 
 import postProject from "../api/post-project";
-import postLogin from "../api/post-login"; //The login api is used for token authentication once user is successfully created
 
 function ProjectForm() {
     const navigate = useNavigate();
@@ -37,7 +36,7 @@ function ProjectForm() {
             ...credentials,
             date_created: utcDateCreated, // Automatically sets date_created as at form submission date
             is_open: true, // Automatically sets project is_open to true
-        }
+        };
 
     if (
         credentials.title && 
@@ -66,14 +65,14 @@ function ProjectForm() {
                 // Parse backend validation errors
                 const validationErrors = JSON.parse(error.message);
                 setErrors(validationErrors);
-                };
+                }
                 } else {
                     setErrors((prevErrors) => ({
                         ...prevErrors,
                         general: error.message,
                     }));
-                    }
-            }
+                }
+        
         };
 
         return (
@@ -126,5 +125,6 @@ function ProjectForm() {
         </button>
         </form>
     );
+};
 
 export default ProjectForm;
