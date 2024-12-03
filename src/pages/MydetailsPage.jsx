@@ -7,7 +7,7 @@
 
 // //This sends the token auth through with the request if permissions require it - such as user details page!  Needs error handling.
 // const response = await fetch(url, {
-//     method: "POST", 
+//     method: "POST",
 //     headers: {
 //         "Content-Type": "application/json",
 //         "Authorization": `Token ${token}`
@@ -17,11 +17,10 @@
 //     }),
 //     });
 
-
 //draft code end
 
-import { useParams } from "react-router-dom";
-import useProject from "../hooks/use-project";
+import { useParams } from 'react-router-dom';
+import useProject from '../hooks/use-project';
 
 function ProjectPage() {
     // Here we use a hook that comes for free in react router called `useParams` to get the id from the URL so that we can pass it to our useProject hook.
@@ -30,31 +29,31 @@ function ProjectPage() {
     const { project, isLoading, error } = useProject(id);
 
     if (isLoading) {
-        return (<p>loading...</p>)
+        return <p>loading...</p>;
     }
 
     if (error) {
-        return (<p>{error.message}</p>)
+        return <p>{error.message}</p>;
     }
 
     return (
-            <div>
+        <div>
             <h2>{project.title}</h2>
             <h3>Created at: {project.date_created}</h3>
             <h3>{`Status: ${project.is_open}`}</h3>
             <h3>Pledges:</h3>
             <ul>
                 {project.pledges.map((pledgeData, key) => {
-                        console.log("Found PledgeData: ", pledgeData)
-                        return (
-                            <li key={key}>
-                                {pledgeData?.amount} from {pledgeData?.supporter}
-                            </li>
-                        );
-                    })}
-                </ul>
-            </div>
-        );
-    }
+                    console.log('Found PledgeData: ', pledgeData);
+                    return (
+                        <li key={key}>
+                            {pledgeData?.amount} from {pledgeData?.supporter}
+                        </li>
+                    );
+                })}
+            </ul>
+        </div>
+    );
+}
 
-export default ProjectPage
+export default ProjectPage;
