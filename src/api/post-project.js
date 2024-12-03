@@ -35,7 +35,6 @@ async function postProject(title, description, goal, image, is_open, date_create
         if (errorMessages.length > 0) {
             throw new Error(errorMessages.join(" "));
         }
-
         
         // Fallback for other errors
         const fallbackError = data?.detail ?? "Error trying to create a new Project";
