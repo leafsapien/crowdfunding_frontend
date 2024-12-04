@@ -20,8 +20,6 @@ function ProjectForm() {
     const handleChange = (event) => {
         const { id, value } = event.target;
 
-        console.log(`Updating fields: ID: ${id}, Value: ${value}`); // DEBUG
-
         setCredentials((prevCredentials) => ({
             ...prevCredentials,
             [id]: value
@@ -38,12 +36,9 @@ function ProjectForm() {
             date_created: utcDateCreated, // Automatically sets date_created as at form submission date
             is_open: true // Automatically sets project is_open to true
         };
-
-        console.log('Project Data: ', projectData); //DEBUG
         
         if (credentials.title && credentials.description && credentials.goal && credentials.image) {
             try {
-                console.log('Sumitting Project data: ', projectData); // DEBUG
 
                 // Creates the new project and stores back end data in response var
                 const response = await postProject(
@@ -52,8 +47,6 @@ function ProjectForm() {
                     parseInt(credentials.goal, 10),
                     credentials.image
                 );
-
-                console.log('Backend response: ', response); //DEBUG
 
                 // Navigate to the newly created project page by obtaining id from response var
                 if (response && response.id) {
@@ -75,7 +68,6 @@ function ProjectForm() {
                 }));
             }
         } else {
-            console.log('ERROR - Unknown as this is the last error catch block'); // DEBUG
 
             setErrors((prevErrors) => ({
                 ...prevErrors,

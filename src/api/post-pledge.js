@@ -1,4 +1,4 @@
-async function postPledge(amount, anonymous, comment, projectID) {
+async function postPledge(amount, anonymous, comment, project) {
     const url = `${import.meta.env.VITE_API_URL}/project/`;
     const response = await fetch(url, {
         method: 'POST', // This describes the API method in which we are sending data to the back end
@@ -10,7 +10,7 @@ async function postPledge(amount, anonymous, comment, projectID) {
             amount: amount,
             anonymous: anonymous,
             comment: comment,
-            projectID,
+            project,
         })
     });
 
