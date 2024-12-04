@@ -6,7 +6,7 @@ import { useAuth } from '../hooks/use-auth';
 
 function LoginForm() {
     const navigate = useNavigate();
-    const { auth, setAuth } = useAuth();
+    const { setAuth } = useAuth();
 
     const [credentials, setCredentials] = useState({
         username: '',

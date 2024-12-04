@@ -40,6 +40,7 @@ function ProjectForm() {
         };
 
         console.log('Project Data: ', projectData); //DEBUG
+        
         if (credentials.title && credentials.description && credentials.goal && credentials.image) {
             try {
                 console.log('Sumitting Project data: ', projectData); // DEBUG
