@@ -1,5 +1,5 @@
-async function getPledge(pledgeID) {
-    const url = `${import.meta.env.VITE_API_URL}/pledges/${pledgeID}`;
+async function getPledge(pledgeID, projectID) {
+    const url = `${import.meta.env.VITE_API_URL}/pledges/${pledgeID}/projects/${projectID}`;
     const response = await fetch(url, { method: 'GET' });
 
     if (!response.ok) {
@@ -9,8 +9,7 @@ async function getPledge(pledgeID) {
             throw new Error(fallbackError);
         });
 
-        const errorMessage = data?.detail ?? fallbackError;
-        throw new Error(errorMessage);
+        throw new Error(data?.detail || fallbackError);
     }
 
     return await response.json();
