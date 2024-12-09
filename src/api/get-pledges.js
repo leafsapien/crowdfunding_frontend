@@ -1,9 +1,9 @@
-async function getPledge(pledgeID) {
-    const url = `${import.meta.env.VITE_API_URL}/pledges/${pledgeID}`;
+async function getPledges(pledgeID) {
+    const url = `${import.meta.env.VITE_API_URL}/pledges/`;
     const response = await fetch(url, { method: 'GET' });
 
     if (!response.ok) {
-        const fallbackError = `Error fetching pledge with id ${pledgeID}`;
+        const fallbackError = `Error fetching pledges list`;
 
         const data = await response.json().catch(() => {
             throw new Error(fallbackError);
@@ -15,4 +15,4 @@ async function getPledge(pledgeID) {
     return await response.json();
 }
 
-export default getPledge;
+export default getPledges;

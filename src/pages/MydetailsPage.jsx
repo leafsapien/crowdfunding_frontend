@@ -47,8 +47,8 @@ function ProjectPage() {
                     console.log('Found PledgeData: ', pledgeData);
                     return (
                         <li key={key}>
-                            {pledgeData?.amount} from {pledgeData?.supporter}
-                        </li>
+                            {pledgeData?.amount} from {pledgeData?.supporter} 
+                        </li> 
                     );
                 })}
             </ul>

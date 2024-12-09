@@ -25,9 +25,9 @@ function PledgeForm({ projectID }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setErrors({}); // Resets errors on new submit
+        setErrors(''); // Resets errors on new submit
         
-        if (credentials.amount && credentials.anonymous && credentials.comment && projectID) {
+        if (credentials.amount && credentials.comment && projectID) {
             try {
 
                 // Creates the new Pledge and stores back end data in response var
@@ -37,11 +37,14 @@ function PledgeForm({ projectID }) {
                     credentials.comment,
                     projectID
                 );
-                console.error("Uh oh, looks like we had an issue creating the Pledge at stage 1 of the function", error.message) // DEBUG
-                console.log("Pledge created successfully - Next we navigate back to the project page", response)
-
+                console.log("Status of function: Pledge created successfully - Next we navigate back to the project page", response)  // DEBUG
+                setCredentials ({
+                    amount: '',
+                    anonymous: false,
+                    comment: '',
+                });
                 // Navigate back to the same project page, which will essentially refresh it with the new pledge
-                navigate(`/project/${projectID}`);
+                navigate(0);
 
             } catch (error) {
                 console.error('Pledge creation failed: ', error.message);

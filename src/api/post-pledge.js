@@ -1,5 +1,5 @@
 async function postPledge(amount, anonymous, comment, project) {
-    const url = `${import.meta.env.VITE_API_URL}/project/`;
+    const url = `${import.meta.env.VITE_API_URL}/pledges/`;
     const response = await fetch(url, {
         method: 'POST', // This describes the API method in which we are sending data to the back end
         headers: {
@@ -8,25 +8,26 @@ async function postPledge(amount, anonymous, comment, project) {
         },
         body: JSON.stringify({
             amount: amount,
-            anonymous: anonymous,
+            anonymous,
             comment: comment,
             project,
         })
     });
 
-    if (!response.ok) {
-        // Parse the backend error response
-        const data = await response.json().catch(() => {
+    let data;
+    try {
+        data = await response.json();
+        console.log("Post Pledge data: ", data);
+    } catch {
             throw new Error('Error trying to create new Pledge');
-        });
-
-        console.error('Backend response error: ', data); //Log the error response in console
-
-        // Fallback for other errors
-        const fallbackError = data?.detail ?? 'Error trying to create a Pledge';
+        };
+    if (!response.ok) {
+        const fallbackError = data?.detail ?? 'Failed to post a new pledge.  Please try again later.';
         throw new Error(fallbackError);
     }
-    return await response.json();
+
+    return data;
 }
+
 
 export default postPledge;
