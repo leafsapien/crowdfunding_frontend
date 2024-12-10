@@ -1,4 +1,4 @@
-async function getUsers(userID) {
+async function getUser(userID) {
     const url = `${import.meta.env.VITE_API_URL}/users/${userID}`;
     const response = await fetch(url, { method: 'GET' });
 
@@ -15,4 +15,4 @@ async function getUsers(userID) {
     return await response.json();
 }
 
-export default getUsers;
+export default getUser;
