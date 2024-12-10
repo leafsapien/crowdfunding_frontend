@@ -2,6 +2,8 @@
 
 by Anaya Dodge
 
+<https://harveztcirkle.netlify.app/>
+
 > If you want to clone this repo, you must first ensure you have installed the necessary packages and turn on Vite using the following commands in the terminal:
 >
 > - cd to the file location e.g. cd SheCodes/react/crowdfunding-frontend
