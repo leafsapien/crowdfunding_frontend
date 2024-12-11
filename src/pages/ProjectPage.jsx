@@ -1,11 +1,11 @@
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { format } from 'date-fns';
 import { useAuth } from '../hooks/use-auth';
 
 import useProject from '../hooks/use-project';
 import PledgeForm from '../components/PledgeForm';
 import PledgeCard from '../components/PledgeCard';
 import usePledge from '../hooks/use-pledge';
+import editProject from '../api/put-project';
 
 function ProjectPage() {
     const { id } = useParams();
@@ -34,7 +34,17 @@ function ProjectPage() {
     return (
         <div>
             <h2>{project.title}</h2>
-            <h3>Created at: {format(new Date(project.date_created), "EEE, dd MMMM yyyy, hh:mm a")}</h3>
+            <h3>
+                Created at: {new Intl.DateTimeFormat("en-US", {
+                weekday: "short",
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true
+                }).format(new Date(project.date_created))}
+            </h3>
             <h3>{`Status: ${project.is_open ? 'Open' : 'Closed'}`}</h3>
             <img src={project.image} />
             <p>{project.description}</p>
@@ -57,7 +67,7 @@ function ProjectPage() {
                 <PledgeForm projectID={project.id} />
                 </div>
             )}
-            {project.is_open && !auth.token && (
+            {project.is_open && !auth.token (
             <button onClick={navigate("/LoginPage")}>Log In to add a Pledge</button>
         )}
             {!project.is_open && <p>This project is closed for pledges.</p>}

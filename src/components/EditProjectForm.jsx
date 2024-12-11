@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import updateUser from '../api/put-user';
+import editProject from '../api/put-project';
 
-function EditUserForm({ user, token }) {
+function EditProjectForm({ project, token }) {
     const navigate = useNavigate();
 
     const [credentials, setCredentials] = useState({
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-        password: user.password,
+        title: project.title,
+        description: project.description,
+        goal: project.goal,
+        image: project.image,
+        isOpen: project.isOpen,
     });
 
     const [errors, setErrors] = useState(''); // For displaying error messages
@@ -27,16 +28,16 @@ function EditUserForm({ user, token }) {
         event.preventDefault();
 
         setErrors({}); // Resets errors on new submit
-        
+
 
         try {
-            await updateUser(
+            await updateProject(
                 credentials.id, setCredentials, token);
-                alert("User details updated successfully")
+                alert("Project updated successfully")
             // Navigate back to my details page
             navigate('/mydetails');
         } catch (error) {
-            console.error('Error: User details update has failed: ', error.message);
+            console.error('Error updating Project details failed: ', error.message);
             }
         }
 
@@ -45,43 +46,43 @@ function EditUserForm({ user, token }) {
             {errors.general && <p style={{ color: 'red' }}>{errors.general}</p>}{' '}
             {/* General error */}
             <div>
-                <label htmlFor="first_name">First name:</label>
+            <label htmlFor="title">Project Title:</label>
                 <input
                     type="text"
-                    id="first_name"
-                    placeholder="Update your first name"
-                    value={credentials.first_name}
+                    id="title"
+                    placeholder="Edit the project title"
+                    value={credentials.title}
                     onChange={handleChange}
                 />
             </div>
             <div>
-                <label htmlFor="last_name">Last name:</label>
+                <label htmlFor="description">Project Details and Description:</label>
                 <input
                     type="text"
-                    id="last_name"
-                    placeholder="Update your surname"
-                    value={credentials.last_name}
+                    id="description"
+                    placeholder="Edit the Project Description"
+                    value={credentials.description}
                     onChange={handleChange}
                 />
             </div>
             <div>
-                <label htmlFor="email">Email:</label>
+                <label htmlFor="goal">Your Financial goal amount:</label>
                 <input
-                    type="email"
-                    id="email"
-                    placeholder="Update your email address"
-                    value={credentials.email}
+                    type="number"
+                    id="goal"
+                    placeholder="e.g. $1,000"
+                    value={credentials.goal}
                     onChange={handleChange}
                 />
-                {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>} {/* Email error */}
             </div>
             <div>
-                <label htmlFor="password">Password:</label>
+                <label htmlFor="image">Update your image:</label>
+                {/* Future prospective feature - How to I make this an image upload box to be stored in my own img files?  That way users don't need to provide an image url */}
                 <input
-                    type="password"
-                    id="password"
-                    placeholder="Update your password"
-                    value={credentials.password}
+                    type="url"
+                    // accept="image/*" // Restricts file type to image files only
+                    id="image"
+                    value={credentials.image}
                     onChange={handleChange}
                 />
             </div>
@@ -92,4 +93,4 @@ function EditUserForm({ user, token }) {
     );
 };
 
-export default EditUserForm;
+export default EditProjectForm;

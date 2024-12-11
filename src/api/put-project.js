@@ -1,4 +1,4 @@
-async function updateProject(projectID, projectData, token) {
+async function editProject(projectID, projectData, token) {
     const url = `${import.meta.env.VITE_API_URL}/project/${projectID}/`;
 
     const response = await fetch(url, {
@@ -24,4 +24,4 @@ async function updateProject(projectID, projectData, token) {
     return await response.json();
 }
 
-export default updateProject;
+export default editProject;

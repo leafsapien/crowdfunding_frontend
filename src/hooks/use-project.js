@@ -1,26 +1,47 @@
 import { useState, useEffect } from 'react';
 
 import getProject from '../api/get-project';
+import getUser from '../api/get-user';
 
-export default function useProject(projectId) {
+export default function useProject(projectID) {
     const [project, setProject] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState();
 
     useEffect(() => {
-        // Here we pass the projectId to the getProject function.
-        getProject(projectId)
-            .then((project) => {
-                setProject(project);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                setError(error);
-                setIsLoading(false);
+        const fetchProjectWithUsers = async () => {
+            setIsLoading(true);
+        try { 
+            
+            const projectData = await getProject(projectID);
+
+            const uniqueUserID = [
+                ...new Set(projectData.pledges.map((pledge) => pledge.supporter)),
+            ];
+
+            const users = await Promise.all(
+                uniqueUserID.map((id) => getUser(id).catch(() => null))
+            );
+
+            const userMap = {};
+            users.forEach((user, index) => {
+                if (user) {
+                    userMap[uniqueUserID[index]] = user.username;
+                }
             });
 
-        // This time we pass the projectId to the dependency array so that the hook will re-run if the projectId changes.
-    }, [projectId]);
+            setProject({...projectData, userMap });
+            setIsLoading(false);
+
+            } catch(error) {
+                setError(error);
+                setIsLoading(false);
+            }
+        }
+
+        fetchProjectWithUsers();
+
+    }, [projectID]);
 
     return { project, isLoading, error };
 }
