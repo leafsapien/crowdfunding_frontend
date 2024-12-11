@@ -29,6 +29,7 @@ function MydetailsPage() {
     return ( 
         <div>
             <h1>{user.username}'s Details</h1>
+            
             {/* Current User's Projects */} 
             <h2>Your Projects</h2>
             {user.projects.length > 0 ? (
@@ -39,7 +40,7 @@ function MydetailsPage() {
                     <p>Goal: ${project.goal}</p>
                     <p>Data Created: {new Date(project.date_created).toLocaleString()}</p>
                     <p>Status: {project.is_open ? "Open" : "Closed"}</p>
-                    <button onClick={() => navigate(`/project/${project.id}`)}>View/Edit Project</button>
+                    <button onClick={() => navigate(`/project/edit`)}>View/Edit Project</button>
                     </li>
                     ))}
                 </ul>
@@ -55,7 +56,7 @@ function MydetailsPage() {
                     <p>Pledge amount ${pledge.amount} to {pledge.project.title}</p>
                     <p>{pledge.anonymous ? "Pledged Anonymously" : `Pledged by: ${user.username}`}</p>
                     <p>Comment: {pledge.comment}</p>
-                    <button onClick={() => navigate(`/project/${project.id}`)}>View/Edit Pledge</button>
+                    <button onClick={() => navigate(`/pledge/edit`)}>View/Edit Pledge</button>
                     </li>
                 ))}
                 </ul>

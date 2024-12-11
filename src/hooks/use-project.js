@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import getProject from '../api/get-project';
 import getUser from '../api/get-user';
+import getPledge from '../api/get-pledge';
 
 export default function useProject(projectID) {
     const [project, setProject] = useState();
@@ -15,22 +16,22 @@ export default function useProject(projectID) {
             
             const projectData = await getProject(projectID);
 
-            const uniqueUserID = [
-                ...new Set(projectData.pledges.map((pledge) => pledge.supporter)),
+            const uniquePledgeID = [
+                ...new Set(projectData.pledges.map(pledge => pledge.id)),
             ];
 
-            const users = await Promise.all(
-                uniqueUserID.map((id) => getUser(id).catch(() => null))
+            const pledges = await Promise.all(
+                uniquePledgeID.map((id) => getPledge(id).catch(() => null))
             );
 
-            const userMap = {};
-            users.forEach((user, index) => {
-                if (user) {
-                    userMap[uniqueUserID[index]] = user.username;
+            const pledgeMap = {};
+            pledges.forEach((pledge, index) => {
+                if (pledge) {
+                    pledgeMap[uniquePledgeID[index]] = pledge.supporter.username;
                 }
             });
 
-            setProject({...projectData, userMap });
+            setProject({...projectData, pledgeMap });
             setIsLoading(false);
 
             } catch(error) {

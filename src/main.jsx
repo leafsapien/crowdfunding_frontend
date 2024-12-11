@@ -8,15 +8,13 @@ import LoginPage from './pages/LoginPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import MydetailsPage from './pages/MydetailsPage.jsx';
 import NewProjectPage from './pages/NewprojectPage.jsx';
-import NotFoundPage from './components/NotFound.jsx';
-import EditProjectPage from './components/EditProjectForm.jsx';
 import EditProjectPage from './pages/EditProjectPage.jsx';
 import EditPledgePage from './pages/EditPledgePage.jsx';
-
 import NavBar from './components/NavBar.jsx';
 import { AuthProvider } from './components/AuthProvider.jsx';
 import EditUserPage from './pages/EditUserPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
+import DeleteRequestPage from './pages/DeleteRequestPage.jsx';
 
 const router = createBrowserRouter([
     {
@@ -32,6 +30,7 @@ const router = createBrowserRouter([
             { path: '/project/new', element: <NewProjectPage /> },
             { path: '/project/edit', element: <EditProjectPage /> },
             { path: '/pledge/edit', element: <EditPledgePage /> },
+            { path: '/delete', element: <DeleteRequestPage /> },
             { path: '*', element: <NotFoundPage /> } /* Custom 404 error page */
         ]
     }

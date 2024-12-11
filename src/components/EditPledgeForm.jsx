@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import updatePledge from '../api/put-pledge';
 
-function EdiPledgeForm({ pledge, token }) {
+function EditPledgeForm({ pledge, token }) {
     const navigate = useNavigate();
 
     const [credentials, setCredentials] = useState({
