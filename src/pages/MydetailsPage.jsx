@@ -1,59 +1,68 @@
-//Place holder TBD//
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/use-auth';
 
-//FUTURE CODE BLOCKS//
+import getCurrentUser from '../api/get-current-user';
 
-//This obtains the token from the user when logged in - Need to add conditional if token exists, if no token redirect to please log in or sign up
-// const token = window.localStorage.getItem("token")
 
-// //This sends the token auth through with the request if permissions require it - such as user details page!  Needs error handling.
-// const response = await fetch(url, {
-//     method: "POST",
-//     headers: {
-//         "Content-Type": "application/json",
-//         "Authorization": `Token ${token}`
-//     },
-//     body: JSON.stringify({
-//         YOUR_DATA_HERE
-//     }),
-//     });
+function MydetailsPage() {
+    const navigate = useNavigate();
+    const { auth } = useAuth();
+    const { user, isLoading, error } = getCurrentUser(auth?.token);
 
-//draft code end
-
-import { useParams } from 'react-router-dom';
-import useProject from '../hooks/use-project';
-
-function ProjectPage() {
-    // Here we use a hook that comes for free in react router called `useParams` to get the id from the URL so that we can pass it to our useProject hook.
-    const { id } = useParams();
-    // useProject returns three pieces of info, so we need to grab them all here
-    const { project, isLoading, error } = useProject(id);
+    if (!auth?.token) {
+        return (
+            <div>
+                <p>You must logged in to view User Details.</p>
+                <button onClick={() => navigate("/")}>Return Home</button>
+            </div>
+        );
+    }
 
     if (isLoading) {
         return <p>loading...</p>;
     }
 
     if (error) {
-        return <p>{error.message}</p>;
+        return <p>{error.message || "Oops! An error occurred, please try again later."}</p>;
     }
 
-    return (
+    return ( 
         <div>
-            <h2>{project.title}</h2>
-            <h3>Created at: {project.date_created}</h3>
-            <h3>{`Status: ${project.is_open}`}</h3>
-            <h3>Pledges:</h3>
-            <ul>
-                {project.pledges.map((pledgeData, key) => {
-                    console.log('Found PledgeData: ', pledgeData);
-                    return (
-                        <li key={key}>
-                            {pledgeData?.amount} from {pledgeData?.supporter} 
-                        </li> 
-                    );
-                })}
-            </ul>
-        </div>
-    );
+            <h1>{user.username}'s Details</h1>
+            {/* Current User's Projects */} 
+            <h2>Your Projects</h2>
+            {user.projects.length > 0 ? (
+                <ul>
+                    {user.projects.map((project) => (
+                    <li key={project.id}>
+                    <h3>{project.title}</h3>
+                    <p>Goal: ${project.goal}</p>
+                    <p>Data Created: {new Date(project.date_created).toLocaleString()}</p>
+                    <p>Status: {project.is_open ? "Open" : "Closed"}</p>
+                    <button onClick={() => navigate(`/project/${project.id}`)}>View/Edit Project</button>
+                    </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>You have not created any projects yet.</p>
+            )}
+            {/* Current User's Pledges */}
+            <h2>Your Pledges</h2>
+            {user.pledges.length > 0 ? (
+                <ul>
+                {user.pledges.map((pledge) => (
+                    <li key={pledge.id}>
+                    <p>Pledge amount ${pledge.amount} to {pledge.project.title}</p>
+                    <p>{pledge.anonymous ? "Pledged Anonymously" : `Pledged by: ${user.username}`}</p>
+                    <p>Comment: {pledge.comment}</p>
+                    <button onClick={() => navigate(`/project/${project.id}`)}>View/Edit Pledge</button>
+                    </li>
+                ))}
+                </ul>
+            ) : (
+                <p>You have not made any pledges yet.</p>
+            )}
+            </div>
+        );
 }
-
-export default ProjectPage;
+export default MydetailsPage;
