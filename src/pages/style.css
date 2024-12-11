@@ -1,0 +1,128 @@
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Playfair+Display&family=Raleway:wght@400;700&display=swap');
+
+/* General Styles */
+body {
+    font-family: 'Lora', serif;
+    background-color: #ACA885;
+    color: #483c46;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    background-color: #ACA885;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Navbar */
+    .navbar {
+    background-color: #355331;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border: 2px solid #241623;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    color: white;
+}
+
+/* Form Section */
+.form-section {
+    text-align: center;
+    padding: 20px;
+}
+
+.form-section h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+}
+
+.form-section p {
+    font-family: 'Raleway', sans-serif;
+    margin: 10px 0;
+}
+
+.form-section a {
+    color: #355331;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.form-section a:hover {
+    text-decoration: underline;
+}
+
+/* Form */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    text-align: left;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid #241623;
+    border-radius: 25px;
+    background-color: white;
+    font-family: 'Raleway', sans-serif;
+    box-shadow: 0 4px 6px #72845F;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: #355331;
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px #72845F;
+}
+
+button:hover {
+    background-color: #241623;
+}
+
+/* Decorative Leaf Elements (Optional)
+form::before, form::after {
+    content: '';
+    position: absolute;
+    background-image: url('path/to/leaf.png');
+    background-size: cover;
+    width: 80px;
+    height: 80px;
+} */
+/* 
+form::before {
+    left: -40px;
+    top: -40px;
+}
+
+form::after {
+    right: -40px;
+    bottom: -40px;
+} */
