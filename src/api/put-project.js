@@ -1,3 +1,4 @@
+
 async function editProject(projectID, projectData, token) {
     const url = `${import.meta.env.VITE_API_URL}/project/${projectID}/`;
 

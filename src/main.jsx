@@ -8,10 +8,15 @@ import LoginPage from './pages/LoginPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import MydetailsPage from './pages/MydetailsPage.jsx';
 import NewProjectPage from './pages/NewprojectPage.jsx';
-import NotFound from './components/NotFound.jsx';
+import NotFoundPage from './components/NotFound.jsx';
+import EditProjectPage from './components/EditProjectForm.jsx';
+import EditProjectPage from './pages/EditProjectPage.jsx';
+import EditPledgePage from './pages/EditPledgePage.jsx';
 
 import NavBar from './components/NavBar.jsx';
 import { AuthProvider } from './components/AuthProvider.jsx';
+import EditUserPage from './pages/EditUserPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 
 const router = createBrowserRouter([
     {
@@ -22,9 +27,12 @@ const router = createBrowserRouter([
             { path: '/login', element: <LoginPage /> },
             { path: '/signup', element: <SignupPage /> },
             { path: '/mydetails', element: <MydetailsPage /> },
+            { path: '/mydetails/edit', element: <EditUserPage /> },
             { path: '/project/:id', element: <ProjectPage /> },
             { path: '/project/new', element: <NewProjectPage /> },
-            { path: '*', element: <NotFound /> } /* Custom 404 error page */
+            { path: '/project/edit', element: <EditProjectPage /> },
+            { path: '/pledge/edit', element: <EditPledgePage /> },
+            { path: '*', element: <NotFoundPage /> } /* Custom 404 error page */
         ]
     }
 ]);
