@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/use-auth';
 
-import getCurrentUser from '../api/get-current-user';
+import useCurrentUser from '../hooks/use-current-user';
 
 
 function MydetailsPage() {
     const navigate = useNavigate();
     const { auth } = useAuth();
-    const { user, isLoading, error } = getCurrentUser(auth?.token);
+    const { user, isLoading, error } = useCurrentUser(auth?.token);
 
     if (!auth?.token) {
         return (
