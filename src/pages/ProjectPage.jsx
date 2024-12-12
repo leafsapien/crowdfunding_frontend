@@ -30,11 +30,13 @@ function ProjectPage() {
         return totalGoal;
     }
 
+    const isOwner = user?.id === project.owner;
+
     return (
-        <div>
-            <h2>{project.title}</h2>
-            <h3>
-                Created at: {new Intl.DateTimeFormat("en-US", {
+        <div className="project-page-container">
+            <h1 className="project-title">{project.title}</h1>
+            <p className="project-date">
+                Created on: {new Intl.DateTimeFormat("en-US", {
                 weekday: "short",
                 day: "2-digit",
                 month: "long",
@@ -43,53 +45,91 @@ function ProjectPage() {
                 minute: "2-digit",
                 hour12: true
                 }).format(new Date(project.date_created))}
-            </h3>
-            <h3>{`Status: ${project.is_open ? 'Open' : 'Closed'}`}</h3>
-            <img src={project.image} />
-            <p>{project.description}</p>
-            <h4>Project Funding Goal: ${project.goal}</h4>
-            <h4>Current Goal Status: ${totalGoal(pledges)}</h4>
+            </p>
 
-            <h3>Pledges:</h3>
-                <ul>
-                {project.pledges.map((pledge, key) => (
-                        <li key={key}>
-                            <div className="pledge-card">
-                            <h3>
-                                {pledge.anonymous 
-                                ? 'Anonymous' 
-                                : `${project.pledgeMap[String(pledge.id)]}` || 'Unknown Supporter'}
-                            </h3>
-                            <p> {pledge.comment || 'No comment'} </p>
-                            <p>Amount: ${pledge.amount || '0'} </p>
+            <div className="project-details-box">
+                <div className="project-content">
+                    <div className="project-main-content">
+                        <div className="project-image-container">
+                            <img src={project.image} alt={project.title} />
                         </div>
-                        </li>
-                    ))}
-                    
-                </ul>
-            
-            {project.is_open && auth?.token ?  (
-                <div>
-                <h3>Make a Pledge</h3>
-                <PledgeForm projectID={project.id} />
+                        <div className="project-info">
+                            <p className="project-description">{project.description}</p>
+                        </div>
+                    </div>
+                    <div className="project-stats">
+                        <h4>Goal: ${project.goal}</h4>
+                        <h4>Current: ${totalGoal(pledges)}</h4>
+                        <p className="project-status">Status: {project.is_open ? 'Open' : 'Closed'}</p>
+                    </div>
                 </div>
-            ) : null }
+            </div>
 
-            {project.is_open && !auth?.token ? (
-                <button onClick={() => navigate("/login")}>Log In to add a Pledge</button>
-            ) : null }
-
-            {!project.is_open ? (<p>This project is closed for pledges.</p>) : null }
-
-            {/* {isOwner ? (
-                <div>
+            {isOwner && auth?.token && (
+                <div className="owner-actions">
                     <h2>Manage Project</h2>
-                    <EditProjectPage project={project} token={auth.token} />
-                    <button onClick={handleDelete} color="var(--warningColor)">
-                    Delete Project
-                    </button>
+                    <div className="action-buttons">
+                        <button onClick={() => navigate(`/project/${project.id}/edit`)}>
+                            Edit Project
+                        </button>
+                        <button 
+                            onClick={() => navigate(`/project/${project.id}/delete`)}
+                            className="delete-button"
+                        >
+                            Delete Project
+                        </button>
+                    </div>
                 </div>
-        ) : null } */}
+            )}
+
+            <div className="pledges-section">
+                <h2>Pledges</h2>
+                <div className="pledges-list">
+                    {project.pledges.map((pledge, key) => (
+                        <div key={key} className="pledge-box">
+                            <h3 className="pledge-supporter">
+                                {pledge.anonymous 
+                                    ? 'Anonymous' 
+                                    : `${project.pledgeMap[String(pledge.id)]}` || 'Unknown Supporter'}
+                            </h3>
+                            <p className="pledge-amount">Amount: ${pledge.amount || '0'}</p>
+                            <p className="pledge-comment">{pledge.comment || 'No comment'}</p>
+                            
+                            {user?.id === pledge.supporter && (
+                                <div className="pledge-actions">
+                                    <button 
+                                        onClick={() => navigate('/pledge/edit')}
+                                        className="edit-button"
+                                    >
+                                        Edit Pledge
+                                    </button>
+                                    <button 
+                                        onClick={() => navigate('/delete')}
+                                        className="delete-button"
+                                    >
+                                        Delete Pledge
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {project.is_open && auth?.token && (
+                <div className="pledge-form-container">
+                    <h2 className="pledge-form-title">Make a Pledge</h2>
+                    <PledgeForm projectID={project.id} />
+                </div>
+            )}
+
+            {project.is_open && !auth?.token && (
+                <div className="login-prompt">
+                    <button onClick={() => navigate("/login")}>Log In to add a Pledge</button>
+                </div>
+            )}
+
+            {!project.is_open && <p className="closed-message">This project is closed for pledges.</p>}
         </div>
     );
 }

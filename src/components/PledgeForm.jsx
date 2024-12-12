@@ -65,11 +65,9 @@ function PledgeForm({ projectID }) {
     };
 
     return (
-        <form>
-            {error.general && <p style={{ color: 'red' }}>{error.general}</p>}{' '}
-            {/* General inline error styling */}
-            <div>
-                <label htmlFor="title">Donation Amount:</label>
+        <form className="pledge-form">
+            <div className="form-group">
+                <label htmlFor="amount">Donation Amount:</label>
                 <input
                     type="number"
                     id="amount"
@@ -78,33 +76,33 @@ function PledgeForm({ projectID }) {
                     onChange={handleChange}
                 />
             </div>
-            <div>
-                <label htmlFor="description">Do you want this Pledge to appear as Anonymous?:</label>
+            
+            <div className="form-group">
+                <label htmlFor="anonymous">Make Anonymous:</label>
                 <input
                     type="checkbox"
                     id="anonymous"
-                    checked={credentials.anonymous} // This is for using the "checked" functionality
-                    onChange={(event) =>
-                        setCredentials((prevCredentials) => ({
-                            ...prevCredentials,
-                            anonymous: event.target.checked, // Updates state based on checkbox value
-                        }))
-                    }
+                    checked={credentials.anonymous}
+                    onChange={handleChange}
                 />
             </div>
-            <div>
-                <label htmlFor="goal">Your comment:</label>
+            
+            <div className="form-group">
+                <label htmlFor="comment">Your Comment:</label>
                 <input
                     type="text"
                     id="comment"
-                    placeholder="Please enter your comment"
+                    placeholder="Enter your comment"
                     value={credentials.comment}
                     onChange={handleChange}
                 />
             </div>
-            <button type="submit" onClick={handleSubmit}>
-                Submit your Pledge
-            </button>
+
+            <div className="submit-button-container">
+                <button type="submit" onClick={handleSubmit}>
+                    Submit Pledge
+                </button>
+            </div>
         </form>
     );
 }

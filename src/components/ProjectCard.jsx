@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './ProjectCard.css';
+import PropTypes from 'prop-types';
 
 
 function ProjectCard(props) {
@@ -15,5 +15,13 @@ function ProjectCard(props) {
         </div>
     );
 }
+
+ProjectCard.propTypes = {
+    projectData: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired
+    }).isRequired
+};
 
 export default ProjectCard;
