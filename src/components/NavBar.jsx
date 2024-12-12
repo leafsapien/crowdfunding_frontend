@@ -1,37 +1,56 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/use-auth';
+import { useState } from 'react';
 
 function NavBar() {
     const { auth, setAuth } = useAuth();
+    const navigate = useNavigate();
+    const [logoutMessage, setLogoutMessage] = useState('');
 
     const handleLogout = () => {
+        // Clear the token from localStorage
         window.localStorage.removeItem('token');
+        
+        // Clear the auth context
         setAuth({ token: null });
+
+        // Show logout message
+        setLogoutMessage('Successfully logged out!');
+
+        // Clear the message after 3 seconds
+        setTimeout(() => {
+            setLogoutMessage('');
+        }, 3000);
+
+        // Navigate to home page
+        navigate('/');
     };
 
     return (
         <div>
             <nav className="navbar">
-                <Link to="/">Home</Link>
-                {!auth.token ? ( //If user is not logged in
+                <Link to="/" className="logo">Harvezt Cirkle</Link>
+                {logoutMessage && (
+                    <div className="logout-message">
+                        {logoutMessage}
+                    </div>
+                )}
+                {auth.token ? (
+                    // Show these links if user is authenticated
                     <>
-                        <Link to="/signup">Sign Up</Link>
-                        <Link to="/login">Log In</Link>
+                        <Link to="/mydetails">My Details</Link>
+                        <Link to="/project/new">Create Project</Link>
+                        <Link onClick={handleLogout}>Logout</Link>
                     </>
                 ) : (
-                    // If User is logged in
+                    // Show these links if user is not authenticated
                     <>
-                        <Link to="/project/new">New Project</Link>
-                        <Link to="/mydetails">My Details</Link>
-                        <Link to="/" onClick={handleLogout}>
-                            Log Out
-                        </Link>
+                        <Link to="/login">Login</Link>
+                        <Link to="/signup">Sign Up</Link>
                     </>
                 )}
             </nav>
-            <div className="content-wrapper">
-                <Outlet />
-            </div>
+            <Outlet />
         </div>
     );
 }

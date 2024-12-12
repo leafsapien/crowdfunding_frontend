@@ -375,3 +375,97 @@ h1 {
     color: var(--text-dark);
     font-style: italic;
 }
+
+.logout-message {
+    background-color: var(--text-light);
+    color: var(--primary-green);
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Additional form styles for delete request */
+.signup-form select,
+.signup-form textarea {
+    width: 75%;
+    padding: 0.5rem;
+    border: 1px solid var(--text-dark);
+    border-radius: 0.5rem;
+    font-family: var(--font-main);
+    box-shadow: 2px 2px 4px var(--hover-green);
+}
+
+.signup-form textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.signup-form select {
+    height: 2.5rem;
+    background-color: var(--text-light);
+}
+
+/* Delete Form Styles */
+.delete-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.delete-form-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-dark);
+    font-size: 2.5rem;
+}
+
+.delete-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.delete-form .form-group {
+    display: grid;
+    grid-template-columns: 200px 75%;
+    gap: 1rem;
+    align-items: start;
+}
+
+.delete-form .form-group label {
+    font-weight: bold;
+    color: var(--text-dark);
+    padding-top: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.delete-form .form-group input,
+.delete-form .form-group select,
+.delete-form .form-group textarea {
+    width: 75%;
+    padding: 0.5rem;
+    border: 1px solid var(--text-dark);
+    border-radius: 0.5rem;
+    font-family: var(--font-main);
+    box-shadow: 2px 2px 4px var(--hover-green);
+}
+
+.delete-form .form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.delete-form .form-group select {
+    height: 2.5rem;
+    background-color: var(--text-light);
+}

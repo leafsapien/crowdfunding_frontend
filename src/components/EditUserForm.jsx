@@ -1,106 +1,121 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
+import { useAuth } from '../hooks/use-auth';
+import useCurrentUser from '../hooks/use-current-user';
 import updateUser from '../api/put-user';
 
-function EditUserForm({ user, token }) {
+function EditUserForm() {
     const navigate = useNavigate();
+    const { auth } = useAuth();
+    const { user, isLoading, error: userError } = useCurrentUser(auth?.token);
+    
+    const [credentials, setCredentials] = useState(null);
+    const [error, setError] = useState('');
 
-    const [credentials, setCredentials] = useState({
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-        password: user.password,
-    });
+    // Initialize credentials once user data is loaded
+    useEffect(() => {
+        if (user) {
+            setCredentials({
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email,
+                password: ''
+            });
+        }
+    }, [user]);
 
-    const [errors, setErrors] = useState(''); // For displaying error messages
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+
+    if (userError) {
+        return <p>{userError}</p>;
+    }
+
+    if (!credentials) {
+        return <p>Loading user details...</p>;
+    }
 
     const handleChange = (event) => {
-        const { id, value, type, checked } = event.target;
+        const { id, value } = event.target;
         setCredentials((prevCredentials) => ({
             ...prevCredentials,
-            [id]: type === "checkbox" ? checked : value,
+            [id]: value
         }));
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        setErrors({}); // Resets errors on new submit
-        
+        setError(''); // Resets errors on new submit
 
         try {
-            await updateUser(
-                credentials.id, setCredentials, token);
-                alert("User details updated successfully")
-            // Navigate back to my details page
+            await updateUser(user.id, credentials, auth.token);
+            alert("User details updated successfully");
             navigate('/mydetails');
         } catch (error) {
-            console.error('Error: User details update has failed: ', error.message);
-            }
+            setError('Error updating user details: ' + error.message);
         }
+    };
 
     return (
-        <form>
-            {errors.general && <p style={{ color: 'red' }}>{errors.general}</p>}{' '}
-            {/* General error */}
-            <div>
-                <label htmlFor="first_name">First name:</label>
-                <input
-                    type="text"
-                    id="first_name"
-                    placeholder="Update your first name"
-                    value={credentials.first_name}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="last_name">Last name:</label>
-                <input
-                    type="text"
-                    id="last_name"
-                    placeholder="Update your surname"
-                    value={credentials.last_name}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="email">Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Update your email address"
-                    value={credentials.email}
-                    onChange={handleChange}
-                />
-                {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>} {/* Email error */}
-            </div>
-            <div>
-                <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Update your password"
-                    value={credentials.password}
-                    onChange={handleChange}
-                />
-            </div>
-            <button type="Update details" onClick={handleSubmit}>
-                Update
-            </button>
-        </form>
-    );
-};
+        <div className="delete-form-container">
+            <h1 className="delete-form-title">Edit User Details</h1>
+            <form className="delete-form">
+                {error && (
+                    <div className="error-container">
+                        <p className="error-message">{error}</p>
+                    </div>
+                )}
+                
+                <div className="form-group">
+                    <label htmlFor="first_name">First Name:</label>
+                    <input
+                        type="text"
+                        id="first_name"
+                        value={credentials.first_name}
+                        onChange={handleChange}
+                    />
+                </div>
 
-EditUserForm.propTypes = {
-    user: PropTypes.shape({
-        first_name: PropTypes.string.isRequired,
-        last_name: PropTypes.string.isRequired,
-        email: PropTypes.string.isRequired,
-        password: PropTypes.string.isRequired
-    }).isRequired,
-    token: PropTypes.string.isRequired
-};
+                <div className="form-group">
+                    <label htmlFor="last_name">Last Name:</label>
+                    <input
+                        type="text"
+                        id="last_name"
+                        value={credentials.last_name}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        value={credentials.email}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="password">New Password (optional):</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={credentials.password}
+                        onChange={handleChange}
+                        placeholder="Leave blank to keep current password"
+                    />
+                </div>
+
+                <div className="submit-button-container">
+                    <button type="submit" onClick={handleSubmit}>
+                        Update Details
+                    </button>
+                </div>
+            </form>
+        </div>
+    );
+}
 
 export default EditUserForm;
