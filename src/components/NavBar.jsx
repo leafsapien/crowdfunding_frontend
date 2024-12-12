@@ -11,7 +11,7 @@ function NavBar() {
 
     return (
         <div>
-            <nav>
+            <nav className="navbar">
                 <Link to="/">Home</Link>
                 {!auth.token ? ( //If user is not logged in
                     <>
@@ -29,7 +29,9 @@ function NavBar() {
                     </>
                 )}
             </nav>
-            <Outlet />
+            <div className="content-wrapper">
+                <Outlet />
+            </div>
         </div>
     );
 }

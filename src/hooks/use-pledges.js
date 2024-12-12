@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import getPledge from '../api/get-pledge';
 import getPledges from '../api/get-pledges';
 
 export default function usePledges() {

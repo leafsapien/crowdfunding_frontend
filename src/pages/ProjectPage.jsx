@@ -1,16 +1,12 @@
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../hooks/use-auth';
-
 import useProject from '../hooks/use-project';
 import PledgeForm from '../components/PledgeForm';
-import usePledge from '../hooks/use-pledge';
-import EditProjectPage from './EditProjectPage';
 import useCurrentUser from '../hooks/use-current-user';
 
 function ProjectPage() {
     const { id } = useParams();
     const { project, isLoading, error } = useProject(id);
-    const { pledge } = usePledge(id);
     const { auth } = useAuth();
     const { user } = useCurrentUser(auth.token);
 
@@ -25,7 +21,6 @@ function ProjectPage() {
 
     const pledges = project.pledges;
     const owner = project.owner; 
-    const isOwner = (owner == user?.id) || false;
 
     function totalGoal (pledges) {
 

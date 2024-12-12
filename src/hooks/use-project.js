@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import getProject from '../api/get-project';
-import getUser from '../api/get-user';
+
 import getPledge from '../api/get-pledge';
 
 export default function useProject(projectID) {

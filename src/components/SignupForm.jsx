@@ -81,66 +81,79 @@ function SignupForm() {
     };
 
     return (
-        <form>
-            {errors.general && <p style={{ color: 'red' }}>{errors.general}</p>}{' '}
-            {/* General error */}
-            <div>
-                <label htmlFor="first_name">First name:</label>
-                <input
-                    type="text"
-                    id="first_name"
-                    placeholder="Your first name"
-                    value={credentials.first_name}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="last_name">Last name:</label>
-                <input
-                    type="text"
-                    id="last_name"
-                    placeholder="Your surname"
-                    value={credentials.last_name}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="email">Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Your email address"
-                    value={credentials.email}
-                    onChange={handleChange}
-                />
-                {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>} {/* Email error */}
-            </div>
-            <div>
-                <label htmlFor="username">Username:</label>
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="Choose your username"
-                    value={credentials.username}
-                    onChange={handleChange}
-                />
-                {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}{' '}
-                {/* Username error */}
-            </div>
-            <div>
-                <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Create your password"
-                    value={credentials.password}
-                    onChange={handleChange}
-                />
-            </div>
-            <button type="submit" onClick={handleSubmit}>
-                Sign Up
-            </button>
-        </form>
+        <div className="signup-form-container">
+            <h1 className="signup-form-title">Create Your Account</h1>
+            <form className="signup-form">
+                <div className="form-group">
+                    <label htmlFor="first_name">First Name:</label>
+                    <input
+                        type="text"
+                        id="first_name"
+                        placeholder="Your first name"
+                        value={credentials.first_name}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="last_name">Last Name:</label>
+                    <input
+                        type="text"
+                        id="last_name"
+                        placeholder="Your surname"
+                        value={credentials.last_name}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="username">Username:</label>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Choose your username"
+                        value={credentials.username}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Your email address"
+                        value={credentials.email}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Create your password"
+                        value={credentials.password}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                {errors && (
+                    <div className="error-container">
+                        <p className="error-message">
+                            {errors.general || errors.username || errors.email}
+                        </p>
+                    </div>
+                )}
+                
+                <div className="submit-button-container">
+                    <button type="submit" onClick={handleSubmit}>
+                        Create Account
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 }
 

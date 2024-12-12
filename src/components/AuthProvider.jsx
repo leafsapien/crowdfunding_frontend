@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Here we create the Context
 export const AuthContext = createContext();
@@ -12,4 +13,8 @@ export const AuthProvider = (props) => {
     });
 
     return <AuthContext.Provider value={{ auth, setAuth }}>{props.children}</AuthContext.Provider>;
+};
+
+AuthProvider.propTypes = {
+    children: PropTypes.node.isRequired
 };

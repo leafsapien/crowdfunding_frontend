@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import editProject from '../api/put-project';
 
@@ -31,7 +32,7 @@ function EditProjectForm({ project, token }) {
 
 
         try {
-            await updateProject(
+            await editProject(
                 credentials.id, setCredentials, token);
                 alert("Project updated successfully")
             // Navigate back to my details page
@@ -91,6 +92,17 @@ function EditProjectForm({ project, token }) {
             </button>
         </form>
     );
+};
+
+EditProjectForm.propTypes = {
+    project: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        goal: PropTypes.number.isRequired,
+        image: PropTypes.string.isRequired,
+        isOpen: PropTypes.bool.isRequired
+    }).isRequired,
+    token: PropTypes.string.isRequired
 };
 
 export default EditProjectForm;

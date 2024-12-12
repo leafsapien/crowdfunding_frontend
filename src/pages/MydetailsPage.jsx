@@ -28,8 +28,14 @@ function MydetailsPage() {
 
     return ( 
         <div>
-            <h1>{user.username}'s Details</h1>
-            
+            <h1>{user.username}&apos;s Details</h1>
+            <ul>
+                <p>Your Username: {user.username}</p>
+                <p>Your Name: {user.first_name} {user.last_name}</p>
+                <button onClick={() => navigate(`/mydetails/edit`)}>View/Edit My Details</button>
+                <button onClick={() => navigate(`/delete`)}>Delete My Account</button>
+            </ul>
+
             {/* Current User's Projects */} 
             <h2>Your Projects</h2>
             {user.projects.length > 0 ? (
@@ -41,6 +47,7 @@ function MydetailsPage() {
                     <p>Data Created: {new Date(project.date_created).toLocaleString()}</p>
                     <p>Status: {project.is_open ? "Open" : "Closed"}</p>
                     <button onClick={() => navigate(`/project/edit`)}>View/Edit Project</button>
+                    <button onClick={() => navigate(`/delete`)}>Delete Project</button>
                     </li>
                     ))}
                 </ul>
@@ -56,7 +63,7 @@ function MydetailsPage() {
                     <p>Pledge amount ${pledge.amount} to {pledge.project.title}</p>
                     <p>{pledge.anonymous ? "Pledged Anonymously" : `Pledged by: ${user.username}`}</p>
                     <p>Comment: {pledge.comment}</p>
-                    <button onClick={() => navigate(`/pledge/edit`)}>View/Edit Pledge</button>
+                    <button onClick={() => navigate(`/delete`)}>Delete Pledge</button>
                     </li>
                 ))}
                 </ul>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import updatePledge from '../api/put-pledge';
 
@@ -82,6 +83,15 @@ function EditPledgeForm({ pledge, token }) {
             </button>
         </form>
     );
+};
+
+EditPledgeForm.propTypes = {
+    pledge: PropTypes.shape({
+        amount: PropTypes.number.isRequired,
+        comment: PropTypes.string.isRequired,
+        anonymous: PropTypes.bool.isRequired
+    }).isRequired,
+    token: PropTypes.string.isRequired
 };
 
 export default EditPledgeForm;

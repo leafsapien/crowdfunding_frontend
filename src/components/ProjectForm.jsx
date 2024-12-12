@@ -77,54 +77,61 @@ function ProjectForm() {
     };
 
     return (
-        <form>
-            {error.general && <p style={{ color: 'red' }}>{error.general}</p>}{' '}
-            {/* General inline error styling */}
-            <div>
-                <label htmlFor="title">Project Title:</label>
-                <input
-                    type="text"
-                    id="title"
-                    placeholder="Your project title"
-                    value={credentials.title}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="description">Project Details and Description:</label>
-                <input
-                    type="text"
-                    id="description"
-                    placeholder="Please provide all the details of your Project including location, story, and the outcome you'd like to see when you reach your funding goal."
-                    value={credentials.description}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="goal">Your Financial goal amount:</label>
-                <input
-                    type="number"
-                    id="goal"
-                    placeholder="e.g. $1,000"
-                    value={credentials.goal}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="image">Please upload your image:</label>
-                {/* Future prospective feature - How to I make this an image upload box to be stored in my own img files?  That way users don't need to provide an image url */}
-                <input
-                    type="url"
-                    // accept="image/*" // Restricts file type to image files only
-                    id="image"
-                    value={credentials.image}
-                    onChange={handleChange}
-                />
-            </div>
-            <button type="submit" onClick={handleSubmit}>
-                Submit your New Project
-            </button>
-        </form>
+        <div className="project-form-container">
+            <h1 className="project-form-title">Create a New Project</h1>
+            <form className="project-form">
+                {error.general && <p style={{ color: 'red' }}>{error.general}</p>}
+                
+                <div className="form-group">
+                    <label htmlFor="title">Project Title:</label>
+                    <input
+                        type="text"
+                        id="title"
+                        placeholder="Your project title"
+                        value={credentials.title}
+                        onChange={handleChange}
+                    />
+                </div>
+                
+                <div className="form-group">
+                    <label htmlFor="description">Project Details and Description:</label>
+                    <textarea
+                        id="description"
+                        placeholder="Please provide all the details of your Project including location, story, and the outcome you'd like to see when you reach your funding goal."
+                        value={credentials.description}
+                        onChange={handleChange}
+                    />
+                </div>
+                
+                <div className="form-group">
+                    <label htmlFor="goal">Financial Goal Amount:</label>
+                    <input
+                        type="number"
+                        id="goal"
+                        placeholder="e.g. 1000"
+                        value={credentials.goal}
+                        onChange={handleChange}
+                    />
+                </div>
+                
+                <div className="form-group">
+                    <label htmlFor="image">Project Image URL:</label>
+                    <input
+                        type="url"
+                        id="image"
+                        placeholder="Enter the URL of your project image"
+                        value={credentials.image}
+                        onChange={handleChange}
+                    />
+                </div>
+                
+                <div className="submit-button-container">
+                    <button type="submit" onClick={handleSubmit}>
+                        Submit your New Project
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 }
 

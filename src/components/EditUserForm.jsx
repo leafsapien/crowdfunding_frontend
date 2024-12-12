@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import updateUser from '../api/put-user';
 
@@ -90,6 +91,16 @@ function EditUserForm({ user, token }) {
             </button>
         </form>
     );
+};
+
+EditUserForm.propTypes = {
+    user: PropTypes.shape({
+        first_name: PropTypes.string.isRequired,
+        last_name: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        password: PropTypes.string.isRequired
+    }).isRequired,
+    token: PropTypes.string.isRequired
 };
 
 export default EditUserForm;

@@ -1,89 +1,122 @@
 /* Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Lora&family=Playfair+Display&family=Raleway:wght@400;700&display=swap');
 
-/* Global Styles */
-body {
-    margin: 0;
-    font-family: 'Playfair Display', serif;
-    background-color: #ACA885;
-    color: #483c46;
+/* Custom Properties for Theme */
+:root {
+  /* Colors */
+  --primary-green: #355331;      /* Main brand color - nav & buttons */
+  --hover-green: #72845F;        /* Interactive elements hover */
+  --background-tan: #ACA885;     /* Main background */
+  --text-dark: #483C46;          /* Main text color */
+  --deep-black: #241623;         /* Shadows and dark elements */
+  --text-light: #E1DFD3;         /* Text on dark backgrounds */
+
+  /* Typography */
+  --font-main: 'Playfair Display', serif;
 }
 
+/* Base Styles */
+body {
+    margin: 0;
+    font-family: var(--font-main);
+    background-color: var(--background-tan);
+    color: var(--text-dark);
+    padding-top: 80px;
+}
+
+/* Text Elements */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-dark);
+    font-family: var(--font-main);
+}
+
+p {
+  color: var(--text-dark);
+}
+
+/* Interactive Elements */
+button, .button {
+  background-color: var(--primary-green);
+  color: var(--text-light);
+  border: 1px solid var(--text-dark);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-main);
+  transition: all 0.3s ease;
+}
+
+button:hover, .button:hover {
+  background-color: var(--hover-green);
+  box-shadow: 0 2px 4px rgba(114, 132, 95, 0.3);
+}
+
+/* Form Elements */
+input, select, textarea {
+  background-color: var(--text-light);
+  color: var(--text-dark);
+  border: 1px solid var(--text-dark);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-family: var(--font-main);
+}
+
+/* Navigation */
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #355331 !important;
-    padding: 1.5rem 0;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--primary-green) !important;
+  padding: 1.5rem 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
 }
 
 .navbar .logo {
-    font-size: 28px;
-    color: #ACA885;
-    font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--text-light);
+  font-family: var(--font-main);
 }
 
 nav a {
-    color: #ACA885;
-    text-decoration: none;
-    margin: 0 1.5rem;
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
+  color: var(--text-light);
+  text-decoration: none;
+  margin: 0 1.5rem;
+  font-family: var(--font-main);
+  font-size: 18px;
+  transition: color 0.3s ease;
 }
 
 nav a:hover {
-    color: #72845F;
+  color: var(--hover-green);
 }
 
-  /* Buttons */
-button {
-    background-color: #355331;
-    color: #483c46;
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    font-family: 'Playfair Display', serif;
+/* Cards or Containers */
+.card {
+    background-color: var(--text-light);
+    border: 1px solid var(--text-dark);
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(36, 22, 35, 0.1);
 }
 
-button:hover {
-    background-color: #72845F;
-}
-
-  /* Create New Account Section Styles */
+/* Create New Account Section Styles */
 .create-new-account {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 5rem;
     padding: 2rem;
-    background-color: #241623;
+    background-color: var(--deep-black);
     border-radius: 1rem;
     box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     margin-top: 0;
-    font-family: 'Playfair Display', serif;
-}
-
-input,
-select {
-    width: 100%;
-    max-width: 20rem;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: none;
-    border-radius: 0.5rem;
-    background-color: #e1dfd3;
-    color: #483c46;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-main);
 }
 
 #project-list {
@@ -91,4 +124,157 @@ select {
     grid-template-columns: 30% 30% 30%;
     column-gap: 10px;
     row-gap: 10px;
+}
+
+/* Project Form Styles */
+.project-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.project-form-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-dark);
+    font-size: 2.5rem;
+}
+
+.project-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1rem;
+    align-items: start;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: var(--text-dark);
+    padding-top: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--text-dark);
+    border-radius: 0.5rem;
+    font-family: var(--font-main);
+}
+
+/* Specific field styles */
+#title {
+    height: 2.5rem;
+}
+
+#description {
+    height: 150px;
+    resize: vertical;
+}
+
+#goal {
+    width: 200px;
+}
+
+#image {
+    width: 100%;
+}
+
+.submit-button-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.submit-button-container button {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* Signup Form Styles */
+.signup-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.signup-form-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-dark);
+    font-size: 2.5rem;
+}
+
+.signup-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+/* Updated form-group styles */
+.signup-form .form-group {
+    display: grid;
+    grid-template-columns: 200px 75%; /* Reduced from 1fr to 75% */
+    gap: 1rem;
+    align-items: start;
+}
+
+.signup-form .form-group label {
+    font-weight: bold;
+    color: var(--text-dark);
+    padding-top: 0.5rem;
+    font-size: 1.1rem; /* Increased text size */
+}
+
+.signup-form .form-group input {
+    width: 75%; /* Reduced width by 25% */
+    height: 2.5rem;
+    padding: 0.5rem;
+    border: 1px solid var(--text-dark);
+    border-radius: 0.5rem;
+    font-family: var(--font-main);
+    box-shadow: 2px 2px 4px var(--hover-green); /* Added shadow effect with light green */
+}
+
+.error-container {
+    margin: 10px 0;
+    padding: 0;
+    grid-column: 1 / -1;  /* Make it span all columns */
+    display: flex;
+    justify-content: center;
+}
+
+.error-message {
+    color: #ff0000;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Submit button styling */
+.signup-form .submit-button-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.signup-form .submit-button-container button {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    min-width: 200px;
+}
+
+/* Same updates for the project form inputs */
+.project-form .form-group input,
+.project-form .form-group textarea {
+    width: 75%;
+    box-shadow: 2px 2px 4px var(--hover-green);
+}
+
+.project-form .form-group label {
+    font-size: 1.1rem;
 }
