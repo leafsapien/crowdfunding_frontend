@@ -8,7 +8,7 @@ function ProjectPage() {
     const { id } = useParams();
     const { project, isLoading, error } = useProject(id);
     const { auth } = useAuth();
-    const { user } = useCurrentUser(auth.token);
+    const { user } = useCurrentUser(auth?.token);
 
     const navigate = useNavigate();
 
@@ -68,15 +68,16 @@ function ProjectPage() {
                     
                 </ul>
             
-            {project.is_open && auth.token ?  (
+            {project.is_open && auth?.token ?  (
                 <div>
                 <h3>Make a Pledge</h3>
                 <PledgeForm projectID={project.id} />
                 </div>
             ) : null }
 
-            {project.is_open && !auth.token ? (
-            <button onClick={navigate("/LoginPage")}>Log In to add a Pledge</button>) : null }
+            {project.is_open && !auth?.token ? (
+                <button onClick={() => navigate("/login")}>Log In to add a Pledge</button>
+            ) : null }
 
             {!project.is_open ? (<p>This project is closed for pledges.</p>) : null }
 

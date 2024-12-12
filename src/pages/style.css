@@ -278,3 +278,100 @@ h1 {
 .project-form .form-group label {
     font-size: 1.1rem;
 }
+
+/* My Details Page Styles */
+.mydetails-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.mydetails-title {
+    text-align: center;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+}
+
+/* User Details Box */
+.user-details-box {
+    background-color: var(--text-light);
+    border: 2px solid var(--hover-green);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin: 0 auto 2rem;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-details-box p {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.user-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Grid Layout */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.projects-section,
+.pledges-section {
+    width: 100%;
+}
+
+.projects-section h2,
+.pledges-section h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Card Styles */
+.item-card {
+    background-color: var(--text-light);
+    border: 1px solid var(--hover-green);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.item-content {
+    flex-grow: 1;
+}
+
+.item-content h3,
+.item-content p {
+    margin: 0.25rem 0;
+}
+
+.item-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.empty-message {
+    text-align: center;
+    color: var(--text-dark);
+    font-style: italic;
+}
