@@ -64,7 +64,7 @@ Deployed front end project link: <https://harveztcirkle.netlify.app/>
 
 Note: The option to edit or delete a project or pledge is only available to the owner or Admin.
 
-![Unauthorised user attempts to edit a project](src/assets/img/editprojectasother)
+![Unauthorised user attempts to edit a project](src/assets/img/editprojectasother.gif)
 
 *Bonus Content*
 
