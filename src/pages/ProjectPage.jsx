@@ -98,7 +98,7 @@ function ProjectPage() {
                             {user?.id === pledge.supporter && (
                                 <div className="pledge-actions">
                                     <button 
-                                        onClick={() => navigate('/pledge/edit')}
+                                        onClick={() => navigate(`/pledge/${pledge.id}/edit`)}
                                         className="edit-button"
                                     >
                                         Edit Pledge

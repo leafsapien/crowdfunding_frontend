@@ -1,6 +1,7 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/use-auth';
 import { useState } from 'react';
+import Footer from './Footer';
 
 function NavBar() {
     const { auth, setAuth } = useAuth();
@@ -50,7 +51,10 @@ function NavBar() {
                     </>
                 )}
             </nav>
-            <Outlet />
+            <div className="content-wrapper">
+                <Outlet />
+            </div>
+            <Footer year={new Date().getFullYear()} />
         </div>
     );
 }

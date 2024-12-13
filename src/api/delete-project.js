@@ -4,7 +4,7 @@ async function deleteProject(projectID, token) {
     const response = await fetch(url, {
         method: "DELETE",
         headers: {
-        Authorization: `Token ${token}`,
+            Authorization: `Token ${token}`,
         },
     });
 

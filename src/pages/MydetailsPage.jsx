@@ -35,7 +35,7 @@ function MydetailsPage() {
                 <p>Username: {user.username}</p>
                 <p>Name: {user.first_name} {user.last_name}</p>
                 <div className="user-actions">
-                    <button onClick={() => navigate(`/mydetails/edit`)}>Update My Details/Password</button>
+                    <button onClick={() => navigate(`/users/${user.id}/edit`)}>Update My Details/Password</button>
                     <button onClick={() => navigate(`/delete`)} className="delete-button">Delete My Account</button>
                 </div>
             </div>

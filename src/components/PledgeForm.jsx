@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import postPledge from '../api/post-pledge';
 
@@ -106,5 +107,9 @@ function PledgeForm({ projectID }) {
         </form>
     );
 }
+
+PledgeForm.propTypes = {
+    projectID: PropTypes.number.isRequired
+};
 
 export default PledgeForm;

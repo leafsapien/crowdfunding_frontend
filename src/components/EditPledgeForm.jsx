@@ -1,97 +1,130 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import { useAuth } from '../hooks/use-auth';
 import updatePledge from '../api/put-pledge';
 
-function EditPledgeForm({ pledge, token }) {
+function EditPledgeForm({ pledge }) {
     const navigate = useNavigate();
-
-    const [credentials, setCredentials] = useState({
+    const { auth } = useAuth();
+    
+    const [formData, setFormData] = useState({
         amount: pledge.amount,
         comment: pledge.comment,
         anonymous: pledge.anonymous
     });
 
-    const [errors, setErrors] = useState(''); // For displaying error messages
+    const [error, setError] = useState('');
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const handleChange = (event) => {
         const { id, value, type, checked } = event.target;
-        setCredentials((prevCredentials) => ({
-            ...prevCredentials,
-            [id]: type === "checkbox" ? checked : value,
+        setFormData((prevData) => ({
+            ...prevData,
+            [id]: type === "checkbox" ? checked : value
         }));
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setError('');
 
-        setErrors({}); // Resets errors on new submit
-
-
-        try {
-            await updatePledge(
-                credentials.id, setCredentials, token);
-                alert("Pledge updated successfully")
-            // Navigate back to my details page
-            navigate('/mydetails');
-        } catch (error) {
-            console.error('Error: Update to Pledge details failed: ', error.message);
+        const changedFields = {};
+        Object.keys(formData).forEach(key => {
+            if (formData[key] !== pledge[key]) {
+                changedFields[key] = formData[key];
             }
+        });
+
+        if (Object.keys(changedFields).length === 0) {
+            setError('No changes made');
+            return;
         }
 
+        try {
+            await updatePledge(pledge.id, changedFields, auth.token);
+            setShowSuccess(true);
+            setTimeout(() => {
+                setShowSuccess(false);
+                const projectId = typeof pledge.project === 'number' 
+                    ? pledge.project 
+                    : pledge.project.id;
+                navigate(`/project/${projectId}`);
+            }, 2000);
+        } catch (error) {
+            console.error('Update error:', error);
+            setError(error.message || 'Error: Failed to update pledge');
+        }
+    };
+
     return (
-        <form>
-            {errors.general && <p style={{ color: 'red' }}>{errors.general}</p>}{' '}
-            {/* General error */}
-            <div>
-            <label htmlFor="title">Edit Donation Amount:</label>
-                <input
-                    type="number"
-                    id="amount"
-                    placeholder="e.g. $10"
-                    value={credentials.amount}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="description">Do you want this Pledge to appear as Anonymous?:</label>
-                <input
-                    type="checkbox"
-                    id="anonymous"
-                    checked={credentials.anonymous} // This is for using the "checked" functionality
-                    onChange={(event) =>
-                        setCredentials((prevCredentials) => ({
-                            ...prevCredentials,
-                            anonymous: event.target.checked, // Updates state based on checkbox value
-                        }))
-                    }
-                />
-            </div>
-            <div>
-                <label htmlFor="goal">Edit your comment:</label>
-                <input
-                    type="text"
-                    id="comment"
-                    placeholder="Please enter your comment"
-                    value={credentials.comment}
-                    onChange={handleChange}
-                />
-            </div>
-            <button type="Update details" onClick={handleSubmit}>
-                Update
-            </button>
-        </form>
+        <div className="delete-form-container">
+            {showSuccess && (
+                <div className="pledge-success-message">
+                    Pledge Edited Successfully!
+                </div>
+            )}
+            <h1 className="delete-form-title">Edit Pledge</h1>
+            <form className="delete-form">
+                {error && (
+                    <div className="error-container">
+                        <p className="error-message">{error}</p>
+                    </div>
+                )}
+                
+                <div className="form-group">
+                    <label htmlFor="amount">Amount:</label>
+                    <input
+                        type="number"
+                        id="amount"
+                        value={formData.amount}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="comment">Comment:</label>
+                    <input
+                        type="text"
+                        id="comment"
+                        value={formData.comment}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="anonymous">Make Anonymous:</label>
+                    <input
+                        type="checkbox"
+                        id="anonymous"
+                        checked={formData.anonymous}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="submit-button-container">
+                    <button type="submit" onClick={handleSubmit}>
+                        Update Pledge
+                    </button>
+                </div>
+            </form>
+        </div>
     );
-};
+}
 
 EditPledgeForm.propTypes = {
     pledge: PropTypes.shape({
+        id: PropTypes.number.isRequired,
         amount: PropTypes.number.isRequired,
         comment: PropTypes.string.isRequired,
-        anonymous: PropTypes.bool.isRequired
-    }).isRequired,
-    token: PropTypes.string.isRequired
+        anonymous: PropTypes.bool.isRequired,
+        project: PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.shape({
+                id: PropTypes.number.isRequired
+            })
+        ]).isRequired
+    }).isRequired
 };
 
 export default EditPledgeForm;

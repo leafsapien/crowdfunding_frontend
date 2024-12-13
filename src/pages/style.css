@@ -320,8 +320,9 @@ h1 {
 .details-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 2rem;
+    gap: 3rem;
+    margin-top: 3rem;
+    align-items: start;
 }
 
 .projects-section,
@@ -332,7 +333,10 @@ h1 {
 .projects-section h2,
 .pledges-section h2 {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-dark);
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 /* Card Styles */
@@ -346,6 +350,7 @@ h1 {
     justify-content: space-between;
     align-items: center;
     box-shadow: 4px 4px 15px var(--hover-green);
+    height: fit-content;
 }
 
 .item-content {
@@ -485,6 +490,9 @@ h1 {
     box-shadow: 4px 4px 15px var(--hover-green);
     animation: fadeInOut 3s forwards;
     z-index: 1000;
+    text-align: center;
+    width: auto;
+    white-space: nowrap;
 }
 
 @keyframes fadeInOut {
@@ -794,4 +802,50 @@ h1 {
 
 .pledge-form .submit-button-container button:hover {
     background-color: var(--hover-green);
+}
+
+.login-prompt {
+    text-align: center;
+    margin: 4rem auto;  /* Increased margin */
+    padding: 2rem;
+    max-width: 600px;
+}
+
+.login-prompt button {
+    background-color: var(--primary-green);
+    padding: 1.2rem 3rem;  /* Larger padding */
+    font-size: 1.3rem;  /* Larger font */
+    min-width: 300px;  /* Minimum width */
+    border-radius: 1.5rem;
+    box-shadow: 4px 4px 15px var(--hover-green);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.login-prompt button:hover {
+    background-color: var(--hover-green);
+    transform: translateY(-2px);
+}
+
+.footer {
+    background-color: var(--primary-green);
+    color: #E5DCC5;  /* Light tan color */
+    padding: 0.25rem;  
+    text-align: center;
+    position: relative;
+    width: 100%;
+    font-family: var(--font-main);
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+}
+
+/* Update content wrapper to handle footer better */
+.content-wrapper {
+    min-height: calc(100vh - 80px);  /* Subtract navbar height */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Push footer to bottom without making it sticky */
+.content-wrapper > *:last-child {
+    margin-bottom: auto;
 }

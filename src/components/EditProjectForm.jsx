@@ -1,108 +1,154 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import { useAuth } from '../hooks/use-auth';
 import editProject from '../api/put-project';
 
-function EditProjectForm({ project, token }) {
+function EditProjectForm({ project }) {
     const navigate = useNavigate();
-
-    const [credentials, setCredentials] = useState({
+    const { auth } = useAuth();
+    
+    const [formData, setFormData] = useState({
         title: project.title,
         description: project.description,
         goal: project.goal,
         image: project.image,
-        isOpen: project.isOpen,
+        is_open: project.is_open
     });
 
-    const [errors, setErrors] = useState(''); // For displaying error messages
+    const [error, setError] = useState('');
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const handleChange = (event) => {
         const { id, value, type, checked } = event.target;
-        setCredentials((prevCredentials) => ({
-            ...prevCredentials,
-            [id]: type === "checkbox" ? checked : value,
+        setFormData((prevData) => ({
+            ...prevData,
+            [id]: type === "checkbox" ? checked : value
         }));
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setError('');
 
-        setErrors({}); // Resets errors on new submit
-
-
-        try {
-            await editProject(
-                credentials.id, setCredentials, token);
-                alert("Project updated successfully")
-            // Navigate back to my details page
-            navigate('/mydetails');
-        } catch (error) {
-            console.error('Error updating Project details failed: ', error.message);
+        const changedFields = {};
+        Object.keys(formData).forEach(key => {
+            const value = formData[key]?.toString().trim();
+            if (value && value !== project[key]?.toString()) {
+                changedFields[key] = value;
             }
+        });
+
+        if (Object.keys(changedFields).length === 0) {
+            setError('No changes made');
+            return;
         }
 
+        try {
+            await editProject(project.id, changedFields, auth.token);
+            setShowSuccess(true);
+            setTimeout(() => {
+                setShowSuccess(false);
+                navigate(`/project/${project.id}`);
+            }, 2000);
+        } catch (error) {
+            console.error('Update error:', error);
+            setError(error.message || 'Error: Failed to update project');
+        }
+    };
+
     return (
-        <form>
-            {errors.general && <p style={{ color: 'red' }}>{errors.general}</p>}{' '}
-            {/* General error */}
-            <div>
-            <label htmlFor="title">Project Title:</label>
-                <input
-                    type="text"
-                    id="title"
-                    placeholder="Edit the project title"
-                    value={credentials.title}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="description">Project Details and Description:</label>
-                <input
-                    type="text"
-                    id="description"
-                    placeholder="Edit the Project Description"
-                    value={credentials.description}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="goal">Your Financial goal amount:</label>
-                <input
-                    type="number"
-                    id="goal"
-                    placeholder="e.g. $1,000"
-                    value={credentials.goal}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="image">Update your image:</label>
-                {/* Future prospective feature - How to I make this an image upload box to be stored in my own img files?  That way users don't need to provide an image url */}
-                <input
-                    type="url"
-                    // accept="image/*" // Restricts file type to image files only
-                    id="image"
-                    value={credentials.image}
-                    onChange={handleChange}
-                />
-            </div>
-            <button type="Update details" onClick={handleSubmit}>
-                Update
-            </button>
-        </form>
+        <div className="delete-form-container">
+            {showSuccess && (
+                <div className="pledge-success-message">
+                    Project Updated Successfully!
+                </div>
+            )}
+            <h1 className="delete-form-title">Edit Project</h1>
+            <form className="delete-form">
+                {error && (
+                    <div className="error-container">
+                        <p className="error-message">{error}</p>
+                    </div>
+                )}
+                
+                <div className="form-group">
+                    <label htmlFor="title">Project Title:</label>
+                    <input
+                        type="text"
+                        id="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="description">Description:</label>
+                    <textarea
+                        id="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="goal">Goal Amount:</label>
+                    <input
+                        type="number"
+                        id="goal"
+                        value={formData.goal}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="image">Image URL:</label>
+                    <input
+                        type="url"
+                        id="image"
+                        value={formData.image}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="is_open">Project Status:</label>
+                    <select
+                        id="is_open"
+                        value={formData.is_open}
+                        onChange={(e) => {
+                            // Convert the string value to boolean
+                            const value = e.target.value === 'true';
+                            setFormData(prev => ({
+                                ...prev,
+                                is_open: value
+                            }));
+                        }}
+                    >
+                        <option value="true">Open</option>
+                        <option value="false">Closed</option>
+                    </select>
+                </div>
+
+                <div className="submit-button-container">
+                    <button type="submit" onClick={handleSubmit}>
+                        Update Project
+                    </button>
+                </div>
+            </form>
+        </div>
     );
-};
+}
 
 EditProjectForm.propTypes = {
     project: PropTypes.shape({
+        id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
         goal: PropTypes.number.isRequired,
         image: PropTypes.string.isRequired,
-        isOpen: PropTypes.bool.isRequired
-    }).isRequired,
-    token: PropTypes.string.isRequired
+        is_open: PropTypes.bool.isRequired
+    }).isRequired
 };
 
 export default EditProjectForm;

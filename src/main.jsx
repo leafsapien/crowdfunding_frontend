@@ -25,11 +25,11 @@ const router = createBrowserRouter([
             { path: '/login', element: <LoginPage /> },
             { path: '/signup', element: <SignupPage /> },
             { path: '/mydetails', element: <MydetailsPage /> },
-            { path: '/mydetails/edit', element: <EditUserPage /> },
+            { path: '/users/:id/edit', element: <EditUserPage /> },
             { path: '/project/:id', element: <ProjectPage /> },
             { path: '/project/new', element: <NewProjectPage /> },
-            { path: '/project/edit', element: <EditProjectPage /> },
-            { path: '/pledge/edit', element: <EditPledgePage /> },
+            { path: '/project/:id/edit', element: <EditProjectPage /> },
+            { path: '/pledge/:id/edit', element: <EditPledgePage /> },
             { path: '/delete', element: <DeleteRequestPage /> },
             { path: '*', element: <NotFoundPage /> } /* Custom 404 error page */
         ]
