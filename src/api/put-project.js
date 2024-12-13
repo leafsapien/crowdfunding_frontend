@@ -18,7 +18,6 @@ async function editProject(projectId, projectData, token) {
 
         return await response.json();
     } catch (error) {
-        console.error('Project update error:', error);
         throw error;
     }
 }

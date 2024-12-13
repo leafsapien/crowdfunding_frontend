@@ -59,8 +59,6 @@ function ProjectForm() {
                     }));
                 }
             } catch (error) {
-                console.error('Project creation failed: ', error.message);
-
                 // Set backend validation errors
                 setErrors((prevErrors) => ({
                     ...prevErrors,

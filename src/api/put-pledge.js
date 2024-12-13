@@ -18,7 +18,6 @@ async function updatePledge(pledgeId, pledgeData, token) {
 
         return await response.json();
     } catch (error) {
-        console.error('Pledge update error:', error);
         throw error;
     }
 }

@@ -39,7 +39,6 @@ async function updateUser(userID, userData, token) {
 
         return await response.json();
     } catch (error) {
-        console.error('User update error:', error);
         throw error;
     }
 }

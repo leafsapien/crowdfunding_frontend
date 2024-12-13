@@ -36,7 +36,6 @@ function PledgeForm({ projectID }) {
                     credentials.comment,
                     projectID
                 );
-                console.log("Status of function: Pledge created successfully - Next we navigate back to the project page", response)
                 setCredentials({
                     amount: '',
                     anonymous: false,
@@ -51,8 +50,6 @@ function PledgeForm({ projectID }) {
                 }, 100);
 
             } catch (error) {
-                console.error('Pledge creation failed: ', error.message);
-
                 // Set backend validation errors
                 setErrors((prevErrors) => ({
                     ...prevErrors,
