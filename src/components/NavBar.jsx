@@ -2,6 +2,7 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/use-auth';
 import { useState } from 'react';
 import Footer from './Footer';
+import logo from '../assets/img/logo_HC.png';
 
 function NavBar() {
     const { auth, setAuth } = useAuth();
@@ -21,7 +22,7 @@ function NavBar() {
     return (
         <div>
             <div className="logo-banner">
-                <img src="/img/logo_HC.png" alt="Harvezt Cirkle Logo" />
+                <img src={logo} alt="Harvezt Cirkle Logo" />
             </div>
             <nav className="navbar">
                 <Link to="/">Home</Link>

@@ -3,6 +3,9 @@ import { useAuth } from '../hooks/use-auth';
 import useProject from '../hooks/use-project';
 import PledgeForm from '../components/PledgeForm';
 import useCurrentUser from '../hooks/use-current-user';
+import deleteProject from '../api/delete-project';
+import deletePledge from '../api/delete-pledge';
+import { useState } from 'react';
 
 function ProjectPage() {
     const { id } = useParams();
@@ -11,6 +14,8 @@ function ProjectPage() {
     const { user } = useCurrentUser(auth?.token);
 
     const navigate = useNavigate();
+
+    const [showSuccessMessage, setShowSuccessMessage] = useState('');
 
     if (isLoading ) {
         return <p>Loading...</p>;
@@ -31,9 +36,63 @@ function ProjectPage() {
     }
 
     const isOwner = user?.id === project.owner;
+    const isAdmin = user?.is_superuser;
+
+    const handleProjectDelete = async () => {
+        if (isAdmin) {
+            if (window.confirm('Are you sure you want to delete this project?')) {
+                try {
+                    await deleteProject(project.id, auth.token);
+                    setShowSuccessMessage('Project Deleted Successfully!');
+                    setTimeout(() => {
+                        setShowSuccessMessage('');
+                        navigate('/');
+                    }, 2000);
+                } catch (error) {
+                    if (error.message.includes('403')) {
+                        alert('Only administrators can delete projects');
+                    } else {
+                        console.error('Error deleting project:', error);
+                        alert('Failed to delete project');
+                    }
+                }
+            }
+        } else {
+            navigate('/delete');
+        }
+    };
+
+    const handlePledgeDelete = async (pledgeId) => {
+        if (isAdmin) {
+            if (window.confirm('Are you sure you want to delete this pledge?')) {
+                try {
+                    await deletePledge(pledgeId, auth.token);
+                    setShowSuccessMessage('Pledge Deleted Successfully!');
+                    setTimeout(() => {
+                        setShowSuccessMessage('');
+                        navigate(0);
+                    }, 2000);
+                } catch (error) {
+                    if (error.message.includes('403')) {
+                        alert('Only administrators can delete pledges');
+                    } else {
+                        console.error('Error deleting pledge:', error);
+                        alert('Failed to delete pledge');
+                    }
+                }
+            }
+        } else {
+            navigate('/delete');
+        }
+    };
 
     return (
         <div className="project-page-container">
+            {showSuccessMessage && (
+                <div className="pledge-success-message">
+                    {showSuccessMessage}
+                </div>
+            )}
             <h1 className="project-title">{project.title}</h1>
             <p className="project-date">
                 Created on: {new Intl.DateTimeFormat("en-US", {
@@ -65,18 +124,20 @@ function ProjectPage() {
                 </div>
             </div>
 
-            {isOwner && auth?.token && (
+            {(isOwner || isAdmin) && auth?.token && (
                 <div className="owner-actions">
                     <h2>Manage Project</h2>
                     <div className="action-buttons">
-                        <button onClick={() => navigate(`/project/${project.id}/edit`)}>
-                            Edit Project
-                        </button>
+                        {isOwner && (
+                            <button onClick={() => navigate(`/project/${project.id}/edit`)}>
+                                Edit Project
+                            </button>
+                        )}
                         <button 
-                            onClick={() => navigate(`/project/${project.id}/delete`)}
+                            onClick={handleProjectDelete}
                             className="delete-button"
                         >
-                            Delete Project
+                            {isAdmin ? 'Admin Delete' : 'Delete Project'}
                         </button>
                     </div>
                 </div>
@@ -95,19 +156,21 @@ function ProjectPage() {
                             <p className="pledge-amount">Amount: ${pledge.amount || '0'}</p>
                             <p className="pledge-comment">{pledge.comment || 'No comment'}</p>
                             
-                            {user?.id === pledge.supporter && (
+                            {(user?.id === pledge.supporter || isAdmin) && (
                                 <div className="pledge-actions">
+                                    {user?.id === pledge.supporter && (
+                                        <button 
+                                            onClick={() => navigate(`/pledge/${pledge.id}/edit`)}
+                                            className="edit-button"
+                                        >
+                                            Edit Pledge
+                                        </button>
+                                    )}
                                     <button 
-                                        onClick={() => navigate(`/pledge/${pledge.id}/edit`)}
-                                        className="edit-button"
-                                    >
-                                        Edit Pledge
-                                    </button>
-                                    <button 
-                                        onClick={() => navigate('/delete')}
+                                        onClick={() => handlePledgeDelete(pledge.id)}
                                         className="delete-button"
                                     >
-                                        Delete Pledge
+                                        {isAdmin ? 'Admin Delete' : 'Delete Pledge'}
                                     </button>
                                 </div>
                             )}

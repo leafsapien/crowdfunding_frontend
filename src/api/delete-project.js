@@ -1,5 +1,5 @@
 async function deleteProject(projectID, token) {
-    const url = `${import.meta.env.VITE_API_URL}/project/${projectID}/`;
+    const url = `${import.meta.env.VITE_API_URL}/projects/${projectID}/`;
 
     const response = await fetch(url, {
         method: "DELETE",

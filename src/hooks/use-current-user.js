@@ -7,27 +7,23 @@ export default function useCurrentUser(token) {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (!token) { 
-            setError("Error: No token provided.");
-            setIsLoading(false);
-            return;
-        }
+        const fetchUser = async () => {
+            try {
+                const userData = await getCurrentUser(token);
+                setUser(userData);
+            } catch (err) {
+                setError(err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-    const fetchCurrentUser = async () => {
-        setIsLoading(true);
-        try {
-            const userData = await getCurrentUser(token);
-            setUser(userData);
-            setError(null);
-        } catch (error) {
-            setError(error.message || "Error: Failed to fetch the current user.");
-        } finally {
+        if (token) {
+            fetchUser();
+        } else {
             setIsLoading(false);
         }
-    };
-
-    fetchCurrentUser();
     }, [token]);
 
-    return { user, isLoading, error}
+    return { user, isLoading, error };
 }
