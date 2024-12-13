@@ -2,12 +2,17 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/use-auth';
 
 import useCurrentUser from '../hooks/use-current-user';
+import deleteProject from '../api/delete-project';
+import deletePledge from '../api/delete-pledge';
+import { useState } from 'react';
 
 
 function MydetailsPage() {
     const navigate = useNavigate();
     const { auth } = useAuth();
     const { user, isLoading, error } = useCurrentUser(auth?.token);
+    const [showSuccessMessage, setShowSuccessMessage] = useState('');
+    const isAdmin = user?.is_superuser;
 
     if (!auth?.token) {
         return (
@@ -26,8 +31,61 @@ function MydetailsPage() {
         return <p>{error.message || "Oops! An error occurred, please try again later."}</p>;
     }
 
+    const handleProjectDelete = async (projectId) => {
+        if (isAdmin) {
+            if (window.confirm('Are you sure you want to delete this project?')) {
+                try {
+                    await deleteProject(projectId, auth.token);
+                    setShowSuccessMessage('Project Deleted Successfully!');
+                    setTimeout(() => {
+                        setShowSuccessMessage('');
+                        navigate(0);  // Refresh the page
+                    }, 2000);
+                } catch (error) {
+                    if (error.message.includes('403')) {
+                        alert('Only administrators can delete projects');
+                    } else {
+                        console.error('Error deleting project:', error);
+                        alert('Failed to delete project');
+                    }
+                }
+            }
+        } else {
+            navigate('/delete');
+        }
+    };
+
+    const handlePledgeDelete = async (pledgeId) => {
+        if (isAdmin) {
+            if (window.confirm('Are you sure you want to delete this pledge?')) {
+                try {
+                    await deletePledge(pledgeId, auth.token);
+                    setShowSuccessMessage('Pledge Deleted Successfully!');
+                    setTimeout(() => {
+                        setShowSuccessMessage('');
+                        navigate(0);  // Refresh the page
+                    }, 2000);
+                } catch (error) {
+                    if (error.message.includes('403')) {
+                        alert('Only administrators can delete pledges');
+                    } else {
+                        console.error('Error deleting pledge:', error);
+                        alert('Failed to delete pledge');
+                    }
+                }
+            }
+        } else {
+            navigate('/delete');
+        }
+    };
+
     return ( 
         <div className="mydetails-container">
+            {showSuccessMessage && (
+                <div className="pledge-success-message">
+                    {showSuccessMessage}
+                </div>
+            )}
             <h1 className="mydetails-title">{user.username}&apos;s Details</h1>
             
             {/* User Details Box */}
@@ -57,7 +115,12 @@ function MydetailsPage() {
                                     </div>
                                     <div className="item-actions">
                                         <button onClick={() => navigate(`/project/${project.id}`)}>View/Edit</button>
-                                        <button onClick={() => navigate(`/delete`)} className="delete-button">Delete</button>
+                                        <button 
+                                            onClick={() => handleProjectDelete(project.id)}
+                                            className="delete-button"
+                                        >
+                                            {isAdmin ? 'Admin Delete' : 'Delete Project'}
+                                        </button>
                                     </div>
                                 </div>
                             ))}
@@ -82,7 +145,12 @@ function MydetailsPage() {
                                     </div>
                                     <div className="item-actions">
                                         <button onClick={() => navigate(`/project/${pledge.project.id}`)}>View/Edit</button>
-                                        <button onClick={() => navigate(`/delete`)} className="delete-button">Delete</button>
+                                        <button 
+                                            onClick={() => handlePledgeDelete(pledge.id)}
+                                            className="delete-button"
+                                        >
+                                            {isAdmin ? 'Admin Delete' : 'Delete Pledge'}
+                                        </button>
                                     </div>
                                 </div>
                             ))}

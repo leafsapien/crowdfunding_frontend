@@ -169,7 +169,7 @@ h1 {
 
 /* Project Form Styles */
 .project-form-container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 2rem;
 }
@@ -312,8 +312,14 @@ h1 {
 /* Same updates for the project form inputs */
 .project-form .form-group input,
 .project-form .form-group textarea {
-    width: 75%;
+    width: 100%;
     box-shadow: 2px 2px 4px var(--hover-green);
+}
+
+/* Make title and description inputs even wider */
+.project-form .form-group input#title,
+.project-form .form-group textarea#description {
+    width: 100%;
 }
 
 .project-form .form-group label {
@@ -369,6 +375,8 @@ h1 {
 .projects-section,
 .pledges-section {
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .projects-section h2,
@@ -378,6 +386,22 @@ h1 {
     color: var(--text-dark);
     font-size: 2rem;
     font-weight: bold;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.projects-list,
+.pledges-list {
+    flex-grow: 1;
+}
+
+.empty-message {
+    text-align: center;
+    color: var(--text-dark);
+    font-style: italic;
+    padding: 2rem 0;
 }
 
 /* Card Styles */
@@ -414,12 +438,6 @@ h1 {
 
 .delete-button:hover {
     background-color: #c82333;
-}
-
-.empty-message {
-    text-align: center;
-    color: var(--text-dark);
-    font-style: italic;
 }
 
 .logout-message {
@@ -695,9 +713,6 @@ h1 {
 }
 
 /* Pledges Section Styles */
-.pledges-section {
-    margin-top: 3rem;
-}
 
 .pledges-section h2 {
     text-align: center;
