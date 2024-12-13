@@ -45,7 +45,7 @@ function PledgeForm({ projectID }) {
                     comment: '',
                 });
                 // Navigate back to the same project page, which will essentially refresh it with the new pledge
-                navigate(0);
+                navigate(`/project/${projectID}`);
 
             } catch (error) {
                 console.error('Pledge creation failed: ', error.message);
