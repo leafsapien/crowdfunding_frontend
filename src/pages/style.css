@@ -828,7 +828,7 @@ h1 {
 
 .footer {
     background-color: var(--primary-green);
-    color: #E5DCC5;  /* Light tan color */
+    color: #E5DCC5 !important;  /* Added !important and kept light tan color */
     padding: 0.25rem;  
     text-align: center;
     position: relative;
@@ -836,6 +836,12 @@ h1 {
     font-family: var(--font-main);
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
     font-size: 0.9rem;
+}
+
+/* Also style the paragraph inside footer explicitly */
+.footer p {
+    color: #E5DCC5 !important;
+    margin: 0;
 }
 
 /* Update content wrapper to handle footer better */
@@ -848,4 +854,39 @@ h1 {
 /* Push footer to bottom without making it sticky */
 .content-wrapper > *:last-child {
     margin-bottom: auto;
+}
+
+.logo-banner {
+    background-color: var(--primary-green);
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--hover-green);
+}
+
+.logo-banner img {
+    height: 80px;
+    width: auto;
+}
+
+.navbar {
+    background-color: var(--primary-green);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--hover-green);
+}
+
+.navbar a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: var(--hover-green);
 }

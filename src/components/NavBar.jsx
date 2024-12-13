@@ -9,42 +9,34 @@ function NavBar() {
     const [logoutMessage, setLogoutMessage] = useState('');
 
     const handleLogout = () => {
-        // Clear the token from localStorage
         window.localStorage.removeItem('token');
-        
-        // Clear the auth context
         setAuth({ token: null });
-
-        // Show logout message
         setLogoutMessage('Successfully logged out!');
-
-        // Clear the message after 3 seconds
         setTimeout(() => {
             setLogoutMessage('');
         }, 3000);
-
-        // Navigate to home page
         navigate('/');
     };
 
     return (
         <div>
+            <div className="logo-banner">
+                <img src="/img/logo_HC.png" alt="Harvezt Cirkle Logo" />
+            </div>
             <nav className="navbar">
-                <Link to="/" className="logo">Harvezt Cirkle</Link>
+                <Link to="/">Home</Link>
                 {logoutMessage && (
                     <div className="logout-message">
                         {logoutMessage}
                     </div>
                 )}
                 {auth.token ? (
-                    // Show these links if user is authenticated
                     <>
                         <Link to="/mydetails">My Details</Link>
                         <Link to="/project/new">Create Project</Link>
                         <Link onClick={handleLogout}>Logout</Link>
                     </>
                 ) : (
-                    // Show these links if user is not authenticated
                     <>
                         <Link to="/login">Login</Link>
                         <Link to="/signup">Sign Up</Link>
