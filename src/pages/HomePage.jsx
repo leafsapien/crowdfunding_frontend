@@ -2,6 +2,7 @@ import useProjects from '../hooks/use-projects';
 import ProjectCard from '../components/ProjectCard';
 import gardenImage from '../assets/img/com_garden.webp';
 import './style.css';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
     const { projects } = useProjects();
@@ -27,6 +28,12 @@ function HomePage() {
                 {projects.map((projectData, key) => {
                     return <ProjectCard key={key} projectData={projectData} />;
                 })}
+            </div>
+
+            <div className="cta-button-container">
+                <Link to="/signup">
+                    <button className="cta-button">Sign Up</button>
+                </Link>
             </div>
         </div>
     );

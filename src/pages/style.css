@@ -889,13 +889,45 @@ h1 {
 
 .footer {
     background-color: var(--primary-green);
-    color: #E5DCC5 !important;  /* Added !important and kept light tan color */
-    padding: 0.25rem;  
-    text-align: center;
-    position: relative;
+    padding: 1rem;
     width: 100%;
     font-family: var(--font-main);
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 4rem;
+}
+
+.acknowledgement {
+    flex: 2;
+    text-align: left;
+}
+
+.acknowledgement h4 {
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.acknowledgement p {
+    color: var(--text-light);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.copyright {
+    flex: 1;
+    text-align: right;
+}
+
+.copyright p {
+    color: var(--text-light);
     font-size: 0.9rem;
 }
 
@@ -1042,4 +1074,27 @@ h1 {
     width: 50%;
     height: 2px;
     background-color: var(--hover-green);
+}
+
+.cta-button-container {
+    text-align: center;
+    margin: 4rem 0;
+}
+
+.cta-button {
+    background-color: var(--primary-green);
+    color: var(--text-light);
+    font-size: 1.5rem;
+    padding: 1rem 3rem;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Playfair Display', serif;
+    box-shadow: 4px 4px 15px var(--hover-green);
+}
+
+.cta-button:hover {
+    background-color: var(--hover-green);
+    transform: translateY(-2px);
 }
