@@ -683,15 +683,33 @@ h1 {
     padding: 1.5rem;
     border-radius: 1rem;
     margin-top: 1rem;
-    border-top: 2px solid var(--hover-green);
+    position: relative;
 }
 
-.project-stats h4,
-.project-status {
-    color: var(--text-dark);
-    font-size: 1.2rem;
+.project-stats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25%;
+    width: 50%;
+    height: 2px;
+    background-color: var(--hover-green);
+}
+
+.project-stats h4 {
+    color: var(--primary-green);
+    font-size: 1.8rem;
     margin: 0;
     text-align: center;
+    font-weight: bold;
+}
+
+.project-status {
+    color: var(--primary-green);
+    font-size: 1.8rem;
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
 }
 
 .owner-actions {

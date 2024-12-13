@@ -5,7 +5,7 @@ import PledgeForm from '../components/PledgeForm';
 import useCurrentUser from '../hooks/use-current-user';
 import deleteProject from '../api/delete-project';
 import deletePledge from '../api/delete-pledge';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function ProjectPage() {
     const { id } = useParams();
@@ -16,6 +16,10 @@ function ProjectPage() {
     const navigate = useNavigate();
 
     const [showSuccessMessage, setShowSuccessMessage] = useState('');
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     if (isLoading ) {
         return <p>Loading...</p>;
