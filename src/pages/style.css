@@ -162,9 +162,9 @@ h1 {
 
 #project-list {
     display: grid;
-    grid-template-columns: 30% 30% 30%;
-    column-gap: 10px;
-    row-gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 /* Project Form Styles */
@@ -563,11 +563,10 @@ h1 {
 
 /* Project Card Styles */
 .project-card {
+    width: 100%;
+    padding: 1rem;
     background-color: var(--text-light);
-    border: 1px solid var(--hover-green);
-    border-radius: 1.5rem;
-    padding: 1.5rem;
-    margin: 1rem;
+    border-radius: 1rem;
     box-shadow: 4px 4px 15px var(--hover-green);
     transition: transform 0.3s ease;
 }
@@ -578,15 +577,21 @@ h1 {
 
 .project-card img {
     width: 100%;
-    height: 200px;
+    height: 250px;
     object-fit: cover;
     border-radius: 0.5rem;
-    margin-bottom: 1rem;
+}
+
+.project-card a {
+    text-decoration: none;
 }
 
 .project-card h3 {
-    color: var(--text-dark);
-    margin: 0.5rem 0;
+    color: var(--primary-green);
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.2rem;
 }
 
 .project-card p {
@@ -956,4 +961,90 @@ h1 {
 
 .navbar a:hover {
     color: var(--hover-green);
+}
+
+.welcome-section {
+    padding: 3rem 0;
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-green);
+    line-height: 1.8;
+    width: 100%;
+}
+
+.welcome-section p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    max-width: 100%;
+}
+
+.welcome-section p:last-child {
+    margin-bottom: 0;
+}
+
+.page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#project-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Ensure project cards maintain good size */
+.project-card {
+    width: 100%;
+}
+
+.project-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.welcome-content {
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+}
+
+.welcome-text {
+    flex: 1;  /* Takes up available space */
+}
+
+.welcome-image {
+    flex: 1;  /* Takes up equal space as text */
+}
+
+.welcome-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+}
+
+.section-title {
+    text-align: center;
+    color: var(--primary-green);
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 3rem 0 2rem 0;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 25%;
+    width: 50%;
+    height: 2px;
+    background-color: var(--hover-green);
 }
