@@ -46,48 +46,48 @@ Deployed front end project link: <https://harveztcirkle.netlify.app/>
 
 ### Homepage
 
-![The homepage](./public/images/homepage.gif)
+![The homepage](src/assets/img/homepage.gif)
 
 ### Project Creation page/form
 
-![The project creation page](./public/images/projectcreation.gif)
+![The project creation page](src/assets/img/projectcreation.gif)
 
 ### Project Page
 
-![The project page](./public/images/projectpage.gif)
+![The project page](src/assets/img/projectpage.gif)
 
 ### Making a Pledge against a Project
 
-![The project with pledges](./public/images/projectpledges.gif)
+![The project with pledges](src/assets/img/projectpledges.gif)
 
 ### Unauthorised user attemps to edit a project
 
 Note: The option to edit or delete a project or pledge is only available to the owner or Admin.
 
-![Unauthorised user attempts to edit a project](./public/images/unauthorisededit.gif)
+![Unauthorised user attempts to edit a project](src/assets/img/unauthorisededit.gif)
 
 *Bonus Content*
 
 ### Sign Up Page
 
-![The sign up page](./public/images/signup.gif)
+![The sign up page](src/assets/img/signup.gif)
 
 ### Login and Log out
 
-![The login and logout page](./public/images/loginlogout.gif)
+![The login and logout page](src/assets/img/loginlogout.gif)
 
 ### My Details Page - Viewing all Projects and Pledges
 
-![My details page](./public/images/mydetails.gif)
+![My details page](src/assets/img/mydetails.gif)
 
 ### Edit my details
 
-![Edit my details](./public/images/editmydetails.gif)
+![Edit my details](src/assets/img/editmydetails.gif)
 
 ### Update and Delete a Project as Admin
 Note: The Admin can update and delete any project or pledge.
-![Update a Pledge and a Project](./public/images/updateproject.gif)
+![Update a Pledge and a Project](src/assets/img/updateproject.gif)
 
 ### Update and Delete a Project as Owner
 Note: The Owner can edit their Project or Pledge.  They can make a request to the Admin to delete their Project or Pledge.
-![Update a Pledge and a Project](./public/images/updateprojectowner.gif)
+![Update a Pledge and a Project](src/assets/img/updateprojectowner.gif)
