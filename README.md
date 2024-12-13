@@ -2,17 +2,17 @@
 
 by Anaya Dodge
 
-<https://harveztcirkle.netlify.app/>
+Deployed front end project link: <https://harveztcirkle.netlify.app/>
 
 > If you want to clone this repo, you must first ensure you have installed the necessary packages and turn on Vite using the following commands in the terminal:
 >
 > - cd to the file location e.g. cd SheCodes/react/crowdfunding-frontend
-> - npm install
+> - npm install (if needed)
 > - npm run dev
 
 ## Project Requirements/Specs
 
-- [x] (1/2 done - Front end site coming soon) Be separated in to two distinct projects: an API built using the Django Rest Framework and a website built using React.
+- [x] Be separated in to two distinct projects: an API built using the Django Rest Framework and a website built using React.
 - [x] Have a unique and creative project name (bonus points for puns and missing vowels!).
 - [x] Define a clear target audience for the platform.
 - [x] Implement user accounts with the following attributes:
@@ -36,30 +36,58 @@ by Anaya Dodge
 - [x] Implement suitable update/delete functionality, e.g., define if a project owner can update project details.
 - [x] Define permissions, e.g., specify who can delete a pledge.
 - [x] Return relevant status codes for both successful and unsuccessful API requests.
-- [ ] (For the front end functionality in future project) Handle failed requests gracefully (e.g., implement a custom 404 page instead of a default ev rror page).
+- [x] Handle failed requests gracefully (e.g., implement a custom 404 page instead of a default ev rror page).
 - [x] Use Token Authentication, including an endpoint for obtaining a token along with the current user's details.
-- [ ] (For the front end functionality in future project) Ensure responsive design for mobile and desktop compatibility.
+- [x] Ensure responsive design for mobile and desktop compatibility.
 
 ### Deployed Project Link
 
-- A link to the deployed project
+<https://harveztcirkle.netlify.app/>
 
 ### Homepage
 
-- A screenshot of the homepage
+![The homepage](./public/images/homepage.gif)
 
-### Project Creation page
+### Project Creation page/form
 
-- A screenshot of the project creation page
+![The project creation page](./public/images/projectcreation.gif)
 
-### Project Creation form
+### Project Page
 
-- A screenshot of the project creation form
+![The project page](./public/images/projectpage.gif)
 
-### Project with pledges
+### Making a Pledge against a Project
 
-- A screenshot of a project with pledges
+![The project with pledges](./public/images/projectpledges.gif)
 
 ### Unauthorised user attemps to edit a project
 
-- A screenshot of the resulting page when an unauthorised user attempts to edit a project
+Note: The option to edit or delete a project or pledge is only available to the owner or Admin.
+
+![Unauthorised user attempts to edit a project](./public/images/unauthorisededit.gif)
+
+*Bonus Content*
+
+### Sign Up Page
+
+![The sign up page](./public/images/signup.gif)
+
+### Login and Log out
+
+![The login and logout page](./public/images/loginlogout.gif)
+
+### My Details Page - Viewing all Projects and Pledges
+
+![My details page](./public/images/mydetails.gif)
+
+### Edit my details
+
+![Edit my details](./public/images/editmydetails.gif)
+
+### Update and Delete a Project as Admin
+Note: The Admin can update and delete any project or pledge.
+![Update a Pledge and a Project](./public/images/updateproject.gif)
+
+### Update and Delete a Project as Owner
+Note: The Owner can edit their Project or Pledge.  They can make a request to the Admin to delete their Project or Pledge.
+![Update a Pledge and a Project](./public/images/updateprojectowner.gif)
